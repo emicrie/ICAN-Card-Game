@@ -17,7 +17,13 @@ public:
 	ADeckActor();
 
 	UPROPERTY(EditAnywhere)
+	int Capacity = 50;
+
+	UPROPERTY(EditAnywhere)
 	class ACardHand* CardHand = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	class ADiscardedDeckActor* DiscardedDeck = nullptr;
 
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* StaticMeshComponent = nullptr;
@@ -28,9 +34,17 @@ public:
 	UFUNCTION()
 	void FillDeck();
 
+	UFUNCTION()
+	void DrawCard(int NrOfCardsToDraw = 1);
+
+	UFUNCTION()
+	void PopulateHand(int NumberOfCardsToPutInHand);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	TArray<ACardHolder*> SpawnedCardsList;
 
 public:	
 	// Called every frame

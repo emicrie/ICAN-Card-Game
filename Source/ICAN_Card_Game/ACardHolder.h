@@ -4,8 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "DiscardedDeckActor.h"
 #include "CardData.h"
 #include "ACardHolder.generated.h"
+
+UENUM(BlueprintType)
+enum class ECardStatus : uint8 {
+	IN_DECK = 0 UMETA(DisplayName = "DECK"),
+	IN_HAND = 1  UMETA(DisplayName = "HAND"),
+	IN_DISCARD = 2     UMETA(DisplayName = "DISCARD"),
+	PLAYED = 3     UMETA(DisplayName = "PLAYED")
+};
 
 UCLASS()
 class ICAN_CARD_GAME_API ACardHolder : public AActor
@@ -17,10 +26,16 @@ public:
 	ACardHolder();
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	ECardStatus Status = ECardStatus::IN_DECK;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	UCardData* CardDataComp = nullptr;
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* MeshComp = nullptr;
+
+	UFUNCTION()
+	void PlayCard(ADiscardedDeckActor* DiscardedDeck, ACardHand* Hand);
 
 protected:
 	// Called when the game starts or when spawned

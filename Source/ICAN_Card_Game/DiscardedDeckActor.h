@@ -4,29 +4,29 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "CardHand.generated.h"
+#include "DiscardedDeckActor.generated.h"
 
 UCLASS()
-class ICAN_CARD_GAME_API ACardHand : public AActor
+class ICAN_CARD_GAME_API ADiscardedDeckActor : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ACardHand();
+	ADiscardedDeckActor();
 
 	UPROPERTY(EditAnywhere)
-	TArray<class ACardHolder*> CardsInHands;
+	class UStaticMeshComponent* StaticMeshComponent = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	int MaxCapacity = 7;
+	TArray<class ACardHolder*> DiscardedCards;
 
-	void DisplayHand();
+	UFUNCTION()
+	void PutInDiscard(ACardHolder* CardToDiscard);
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
 
 public:	
 	// Called every frame

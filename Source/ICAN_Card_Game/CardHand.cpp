@@ -21,16 +21,21 @@ void ACardHand::BeginPlay()
 
 void ACardHand::DisplayHand()
 {
-	for (int i = 0; i < CardList.Num(); ++i)
+	for (int i = 0; i < CardsInHands.Num(); ++i)
 	{
 		FVector ActorLocation = GetActorLocation();
-		FVector SpawnLocation(ActorLocation.X * i, ActorLocation.Y, ActorLocation.Z);
-		FRotator SpawnRotation(0.0f, 0.0f, 0.0f);
-		FVector SpawnScale = FVector(0.5f, 0.5f, 0.5f);
-		FTransform SpawnTransform = FTransform(SpawnRotation, SpawnLocation, SpawnScale);
-		FActorSpawnParameters SpawnInfo;
-		
-		//AActor* MySpawnedActor = GetWorld()->SpawnActor<ACardHolder>(CardList[i], SpawnTransform, SpawnInfo);
+
+		FVector Og;
+		FVector BoxExtent;
+
+		GetActorBounds(true, Og, BoxExtent);
+
+		FVector Scale = GetActorScale3D();
+		FVector SpawnLocation(ActorLocation.X, ActorLocation.Y + (i * 30.0f), ActorLocation.Z + (i * 0.001f));
+		FRotator SpawnRotation(90.0f, 0.0f, 0.0f);
+
+		Cast<AActor>(CardsInHands[i])->SetActorLocation(SpawnLocation);
+		Cast<AActor>(CardsInHands[i])->SetActorRotation(SpawnRotation);
 	}
 }
 
