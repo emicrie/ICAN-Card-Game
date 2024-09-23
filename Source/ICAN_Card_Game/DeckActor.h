@@ -4,23 +4,29 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "CardData.h"
-#include "ACardHolder.generated.h"
+#include "Templates/SubclassOf.h"
+#include "DeckActor.generated.h"
 
 UCLASS()
-class ICAN_CARD_GAME_API ACardHolder : public AActor
+class ICAN_CARD_GAME_API ADeckActor : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ACardHolder();
+	ADeckActor();
 
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	UCardData* CardDataComp = nullptr;
+	UPROPERTY(EditAnywhere)
+	class ACardHand* CardHand = nullptr;
 
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	class UStaticMeshComponent* MeshComp = nullptr;
+	UPROPERTY(EditAnywhere)
+	class UStaticMeshComponent* StaticMeshComponent = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	TArray<TSubclassOf<class ACardHolder>> CardList;
+
+	UFUNCTION()
+	void FillDeck();
 
 protected:
 	// Called when the game starts or when spawned
