@@ -19,10 +19,10 @@ public:
 	class UStaticMeshComponent* StaticMeshComponent = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	TArray<class ACardHolder*> DiscardedCards;
+	TArray<class ACard*> DiscardedCards;
 
 	UFUNCTION()
-	void PutInDiscard(ACardHolder* CardToDiscard);
+	void PutInDiscard(ACard* CardToDiscard);
 
 protected:
 	// Called when the game starts or when spawned

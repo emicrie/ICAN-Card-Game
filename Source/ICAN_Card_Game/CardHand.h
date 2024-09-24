@@ -16,7 +16,7 @@ public:
 	ACardHand();
 
 	UPROPERTY(EditAnywhere)
-	TArray<class ACardHolder*> CardsInHands;
+	TArray<class ACard*> CardsInHands;
 
 	UPROPERTY(EditAnywhere)
 	int MaxCapacity = 7;

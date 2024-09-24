@@ -2,7 +2,7 @@
 
 
 #include "DeckActor.h"
-#include "ACardHolder.h"
+#include "Card.h"
 #include "CardHand.h"
 #include "DiscardedDeckActor.h"
 #include "Components/StaticMeshComponent.h"
@@ -21,32 +21,41 @@ void ADeckActor::FillDeck()
 {
 	int Index = 0;
 
-	while (SpawnedCardsList.Num()-1 < Capacity)
+	checkf(PossibleCardsList.Num() > 0, TEXT("No cards were placed in the possible cards list"));
+	if (PossibleCardsList.Num() > 0)
 	{
-		int CardIndex = FMath::RandRange(0, CardList.Num() - 1);
+		while (SpawnedCardsList.Num() < Capacity)
+		{
+			int CardIndex = FMath::RandRange(0, PossibleCardsList.Num() - 1);
 
-		FVector ActorLocation = GetActorLocation();
-		FVector Og;
-		FVector BoxExtent;
+			FVector ActorLocation = GetActorLocation();
+			FVector Og;
+			FVector BoxExtent;
 
-		GetActorBounds(true, Og, BoxExtent);
+			GetActorBounds(true, Og, BoxExtent);
 
-		FVector SpawnLocation(ActorLocation.X, ActorLocation.Y, (ActorLocation.Z - BoxExtent.Z) + (Index * 1.0f));
-		FRotator SpawnRotation(0.0f, 0.0f, 0.0f);
-		FVector SpawnScale = FVector(0.5f, 0.5f, 0.5f);
-		FTransform SpawnTransform = FTransform(SpawnRotation, SpawnLocation, SpawnScale);
-		FActorSpawnParameters SpawnInfo;
-		AActor* MySpawnedActor = GetWorld()->SpawnActor<ACardHolder>(CardList[CardIndex], SpawnTransform, SpawnInfo);
+			FVector SpawnLocation(ActorLocation.X, ActorLocation.Y, (ActorLocation.Z - BoxExtent.Z) + (Index * 1.0f));
+			FRotator SpawnRotation(0.0f, 0.0f, 0.0f);
+			FVector SpawnScale = FVector(0.5f, 0.5f, 0.5f);
+			FTransform SpawnTransform = FTransform(SpawnRotation, SpawnLocation, SpawnScale);
+			FActorSpawnParameters SpawnInfo;
+			AActor* MySpawnedActor = GetWorld()->SpawnActor<ACard>(PossibleCardsList[CardIndex], SpawnTransform, SpawnInfo);
 
-		SpawnedCardsList.Insert(Cast<ACardHolder>(MySpawnedActor), 0);
-		Cast<ACardHolder>(SpawnedCardsList[0])->Status = ECardStatus::IN_DECK;
+			if (MySpawnedActor)
+			{
+				SpawnedCardsList.Insert(Cast<ACard>(MySpawnedActor), 0);
+				Cast<ACard>(SpawnedCardsList[0])->Status = ECardStatus::IN_DECK;
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("The card couldn't spawn, and as such, it wasn't added"));
+			}
 
-		Index++;		
+			Index++;
+		}
 	}
-	
 
-	DrawCard(4);
-	CardHand->CardsInHands[0]->PlayCard(DiscardedDeck, CardHand);
+	CardHand->DisplayHand();
 }
 
 void ADeckActor::DrawCard(int NrOfCardsToDraw)
@@ -61,11 +70,11 @@ void ADeckActor::PopulateHand(int NumberOfCardsToPutInHand)
 	{
 		for (int i = 0; i < NumberOfCardsToPutInHand; ++i)
 		{
-			if (CardHand->CardsInHands.Num() < CardHand->MaxCapacity)
+			if (CardHand->CardsInHands.Num() < CardHand->MaxCapacity && SpawnedCardsList.Num() > 0)
 			{
-				CardHand->CardsInHands.Insert(Cast<ACardHolder>(SpawnedCardsList[i]), 0);
-				Cast<ACardHolder>(CardHand->CardsInHands[0])->Status = ECardStatus::IN_HAND;
-				CardList.RemoveAt(CardList.Num() - 1);
+				CardHand->CardsInHands.Insert(Cast<ACard>(SpawnedCardsList[i]), 0);
+				SpawnedCardsList.RemoveAt(i);
+				Cast<ACard>(CardHand->CardsInHands[0])->Status = ECardStatus::IN_HAND;
 				CardHand->DisplayHand();
 			}
 		}

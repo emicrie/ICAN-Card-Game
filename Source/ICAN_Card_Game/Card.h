@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "DiscardedDeckActor.h"
 #include "CardData.h"
-#include "ACardHolder.generated.h"
+#include "Card.generated.h"
 
 UENUM(BlueprintType)
 enum class ECardStatus : uint8 {
@@ -17,13 +17,13 @@ enum class ECardStatus : uint8 {
 };
 
 UCLASS()
-class ICAN_CARD_GAME_API ACardHolder : public AActor
+class ICAN_CARD_GAME_API ACard : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ACardHolder();
+	ACard();
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	ECardStatus Status = ECardStatus::IN_DECK;

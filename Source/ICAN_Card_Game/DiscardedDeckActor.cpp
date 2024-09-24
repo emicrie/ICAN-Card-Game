@@ -1,5 +1,5 @@
 #include "DiscardedDeckActor.h"
-#include "ACardHolder.h"
+#include "Card.h"
 // Fill out your copyright notice in the Description page of Project Settings.
 
 // Sets default values
@@ -12,7 +12,7 @@ ADiscardedDeckActor::ADiscardedDeckActor()
 
 }
 
-void ADiscardedDeckActor::PutInDiscard(ACardHolder* CardToDiscard)
+void ADiscardedDeckActor::PutInDiscard(ACard* CardToDiscard)
 {
 	FVector ActorLocation = GetActorLocation();
 	FVector Og;

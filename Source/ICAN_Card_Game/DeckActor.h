@@ -29,7 +29,7 @@ public:
 	class UStaticMeshComponent* StaticMeshComponent = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	TArray<TSubclassOf<class ACardHolder>> CardList;
+	TArray<TSubclassOf<class ACard>> PossibleCardsList;
 
 	UFUNCTION()
 	void FillDeck();
@@ -44,7 +44,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	TArray<ACardHolder*> SpawnedCardsList;
+	TArray<ACard*> SpawnedCardsList;
 
 public:	
 	// Called every frame

@@ -2,7 +2,7 @@
 
 
 #include "CardHand.h"
-#include "ACardHolder.h"
+#include "Card.h"
 
 // Sets default values
 ACardHand::ACardHand()
@@ -28,10 +28,9 @@ void ACardHand::DisplayHand()
 		FVector Og;
 		FVector BoxExtent;
 
-		GetActorBounds(true, Og, BoxExtent);
+		CardsInHands[i]->GetActorBounds(true, Og, BoxExtent);
 
-		FVector Scale = GetActorScale3D();
-		FVector SpawnLocation(ActorLocation.X, ActorLocation.Y + (i * 30.0f), ActorLocation.Z + (i * 0.001f));
+		FVector SpawnLocation(ActorLocation.X, ActorLocation.Y + ((i * (BoxExtent.Y * 2.5f))), ActorLocation.Z + (i * 0.001f));
 		FRotator SpawnRotation(90.0f, 0.0f, 0.0f);
 
 		Cast<AActor>(CardsInHands[i])->SetActorLocation(SpawnLocation);
