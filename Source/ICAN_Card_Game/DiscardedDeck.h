@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "CardCollection.h"
 #include "DiscardedDeck.generated.h"
 
 UCLASS()
-class ICAN_CARD_GAME_API ADiscardedDeck : public AActor
+class ICAN_CARD_GAME_API ADiscardedDeck : public ACardCollection
 {
 	GENERATED_BODY()
 	
@@ -18,15 +19,15 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* StaticMeshComponent = nullptr;
 
-	UPROPERTY(EditAnywhere)
-	TArray<class ACard*> DiscardedCards;
-
-	UFUNCTION()
-	void PutInDiscard(ACard* CardToDiscard);
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	//*--- ACardCollectionInterface
+	virtual bool AddCard(class ACard* Card) override;
+	virtual bool RemoveCard(class ACard* Card) override;
+	virtual void UpdateCollectionVisuals() override;
+	//*--- End of ACardCollectionInterface
 
 public:	
 	// Called every frame

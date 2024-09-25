@@ -1,35 +1,46 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Card.h"
-#include "Hand.h"
-#include "DiscardedDeck.h"
-#include "Components/StaticMeshComponent.h"
+#include "CardCollection.h"
 
 // Sets default values
-ACard::ACard()
+ACardCollection::ACardCollection()
 {
-	CardDataComp = CreateDefaultSubobject<UCardData>(TEXT("Card Data"));
-	MeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh Comp"));
-
-	MeshComp->SetupAttachment(RootComponent);
-	
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
 
 // Called when the game starts or when spawned
-void ACard::BeginPlay()
+void ACardCollection::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void ACard::Tick(float DeltaTime)
+void ACardCollection::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
+bool ACardCollection::AddCard(ACard* Card)
+{
+	return true;
+}
+
+bool ACardCollection::RemoveCard(ACard* Card)
+{
+	return true;
+}
+
+bool ACardCollection::Shuffle()
+{
+	return true;
+}
+
+void ACardCollection::UpdateCollectionVisuals()
+{
+
+}
