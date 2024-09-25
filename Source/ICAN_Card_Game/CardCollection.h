@@ -19,8 +19,11 @@ public:
 	UPROPERTY(EditAnywhere)
 	TArray<ACard*> Cards;
 
+	UPROPERTY(EditAnywhere, meta = (EditCondition = "!bInfiniteCapacity"))
+	int MaxCapacity = 99;
+
 	UPROPERTY(EditAnywhere)
-	int MaxCapacity = 7;
+	bool bInfiniteCapacity = false;
 
 	UFUNCTION(BlueprintCallable)
 	virtual bool AddCard(ACard* Card);

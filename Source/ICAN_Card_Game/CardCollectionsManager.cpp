@@ -48,6 +48,9 @@ void UCardCollectionsManager::TickComponent(float DeltaTime, ELevelTick TickType
 bool UCardCollectionsManager::MoveBetweenCollections(ACardCollection* A, ACardCollection* B, ACard* Card)
 {
 	bool Result = false;
+	bool IsAnyCollectionInvalid = A->Cards.Num() <= 0 || (!B->bInfiniteCapacity && (B->Cards.Num() >= B->MaxCapacity));
+	if (IsAnyCollectionInvalid) { return false; }
+
 	if (A && B && Card)
 	{
 		Result |= A->RemoveCard(Card);

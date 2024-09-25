@@ -36,12 +36,6 @@ public:
 	UFUNCTION()
 	void FillDeck();
 
-	UFUNCTION()
-	void DrawCard(int NrOfCardsToDraw = 1);
-
-	UFUNCTION()
-	void PopulateHand(int NumberOfCardsToPutInHand);
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

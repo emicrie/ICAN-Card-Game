@@ -31,7 +31,7 @@ void ADeck::FillDeck()
 			AActor* MySpawnedActor = GetWorld()->SpawnActor<ACard>(PossibleCardsList[CardIndex], SpawnInfo);
 			if (MySpawnedActor)
 			{
-				SpawnedCardsList.Insert(Cast<ACard>(MySpawnedActor), 0);
+				SpawnedCardsList.Add(Cast<ACard>(MySpawnedActor));
 
 				if (!AddCard(Cast<ACard>(MySpawnedActor)))
 				{
@@ -42,28 +42,7 @@ void ADeck::FillDeck()
 			Index++;
 		}
 	}
-}
-
-void ADeck::DrawCard(int NrOfCardsToDraw)
-{
-	//PopulateHand(NrOfCardsToDraw);
-}
-
-void ADeck::PopulateHand(int NumberOfCardsToPutInHand)
-{
-	//checkf(Hand, TEXT("There is no hand to put cards into, this shouldn't happen! Make sure Hand is set"));
-	//if (Hand)
-	//{
-	//	for (int i = 0; i < NumberOfCardsToPutInHand; ++i)
-	//	{
-	//		if (Hand->CardsInHands.Num() < Hand->MaxCapacity && SpawnedCardsList.Num() > 0)
-	//		{
-	//			Hand->CardsInHands.Insert(Cast<ACard>(SpawnedCardsList[i]), 0);
-	//			SpawnedCardsList.RemoveAt(i);
-	//			Hand->CardsInHands[0]->Status = ECardStatus::IN_HAND;
-	//		}
-	//	}
-	//}
+	UpdateCollectionVisuals();
 }
 
 // Called when the game starts or when spawned
@@ -78,8 +57,8 @@ bool ADeck::AddCard(ACard* Card)
 {
 	if (Card && Cards.Num() < Capacity)
 	{
-		Cards.Add(Card);
-		Cast<ACard>(SpawnedCardsList[0])->Status = ECardStatus::IN_DECK;
+		Cards.Insert(Card, 0);
+		Card->Status = ECardStatus::IN_DECK;
 		UpdateCollectionVisuals();
 		return true;
 	}
