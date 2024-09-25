@@ -2,7 +2,6 @@
 
 
 #include "Hand.h"
-#include "Card.h"
 
 // Sets default values
 AHand::AHand()
@@ -19,22 +18,47 @@ void AHand::BeginPlay()
 	
 }
 
-void AHand::DisplayHand()
+bool AHand::AddCard(ACard* Card)
 {
-	for (int i = 0; i < CardsInHands.Num(); ++i)
+	if (Card && Cards.Num() < MaxCapacity)
 	{
-		FVector ActorLocation = GetActorLocation();
+		Cards.Add(Card);
+		Card->Status = ECardStatus::IN_HAND;
+		UpdateCollectionVisuals();
+		return true;
+	}
 
-		FVector Og;
-		FVector BoxExtent;
+	return false;
+}
 
-		CardsInHands[i]->GetActorBounds(true, Og, BoxExtent);
+bool AHand::RemoveCard(ACard* Card)
+{
+	if (Card && Cards.Num() > 0)
+	{
+		Cards.Remove(Card);
+		UpdateCollectionVisuals();
+		return true;
+	}
 
-		FVector SpawnLocation(ActorLocation.X, ActorLocation.Y + ((i * (BoxExtent.Y * 2.5f))), ActorLocation.Z + (i * 0.001f));
-		FRotator SpawnRotation(90.0f, 0.0f, 0.0f);
+	return false;
+}
 
-		Cast<AActor>(CardsInHands[i])->SetActorLocation(SpawnLocation);
-		Cast<AActor>(CardsInHands[i])->SetActorRotation(SpawnRotation);
+void AHand::UpdateCollectionVisuals()
+{
+	FVector ActorLocation = GetActorLocation();
+
+	FVector Og;
+	FVector BoxExtent;
+
+	for (int i = 0; i < Cards.Num(); ++i)
+	{
+		Cards[i]->GetActorBounds(true, Og, BoxExtent);
+
+		FVector Location(ActorLocation.X, ActorLocation.Y + ((i * (BoxExtent.Y * 2.5f))), ActorLocation.Z + (i * 0.001f));
+		FRotator Rotation(90.0f, 0.0f, 0.0f);
+
+		Cast<AActor>(Cards[i])->SetActorLocation(Location);
+		Cast<AActor>(Cards[i])->SetActorRotation(Rotation);
 	}
 }
 

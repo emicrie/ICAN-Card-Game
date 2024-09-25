@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "DiscardedDeck.h"
 #include "CardData.h"
 #include "Card.generated.h"
 
@@ -33,9 +32,6 @@ public:
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* MeshComp = nullptr;
-
-	UFUNCTION()
-	void PlayCard(ADiscardedDeck* DiscardedDeck, AHand* Hand);
 
 protected:
 	// Called when the game starts or when spawned

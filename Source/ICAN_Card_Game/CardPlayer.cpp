@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "CardCollectionsManager.h"
 #include "CardPlayerController.h"
 
 //TODO: References to such elements should be put in a manager
@@ -33,6 +34,8 @@ void ACardPlayer::BeginPlay()
 
 	Controller->bShowMouseCursor = true;
 	Controller->DefaultMouseCursor = EMouseCursor::Crosshairs;
+
+	CollectionManager = UCardCollectionsManager::GetInstance();
 	
 }
 
@@ -64,9 +67,9 @@ void ACardPlayer::OnClick()
 		if (HitResult.bBlockingHit)
 		{
 			ADeck* Deck = Cast<ADeck>(HitResult.GetActor());
-			if (Deck)
+			if (Deck && Deck->Cards.Num() > 0)
 			{
-				Deck->DrawCard(1);
+				CollectionManager->MoveBetweenCollections(CollectionManager->Deck, CollectionManager->Hand, CollectionManager->Deck->Cards[0]);
 			}
 			return;
 		}
@@ -79,14 +82,7 @@ void ACardPlayer::OnClick()
 			ACard* Card = Cast<ACard>(HitResult.GetActor());
 			if (Card && (Card->Status == ECardStatus::IN_HAND))
 			{
-				TArray<AActor*> dest;
-				UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADiscardedDeck::StaticClass(), dest);
-				ADiscardedDeck* DiscDeck= Cast<ADiscardedDeck>(dest[0]);
-
-				UGameplayStatics::GetAllActorsOfClass(GetWorld(), AHand::StaticClass(), dest);
-				AHand* Hand = Cast<AHand>(dest[0]);
-
-				Card->PlayCard(DiscDeck, Hand);
+				CollectionManager->MoveBetweenCollections(CollectionManager->Hand, CollectionManager->DiscardedDeck, Card);
 			}
 		}
 

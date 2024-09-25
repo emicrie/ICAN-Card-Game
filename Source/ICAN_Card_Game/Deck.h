@@ -5,10 +5,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Templates/SubclassOf.h"
+#include "CardCollection.h"
+#include "Hand.h"
 #include "Deck.generated.h"
 
 UCLASS()
-class ICAN_CARD_GAME_API ADeck : public AActor
+class ICAN_CARD_GAME_API ADeck : public ACardCollection
 {
 	GENERATED_BODY()
 	
@@ -45,6 +47,12 @@ protected:
 	virtual void BeginPlay() override;
 
 	TArray<ACard*> SpawnedCardsList;
+
+	//*--- ACardCollectionInterface
+	virtual bool AddCard(class ACard* Card) override;
+	virtual bool RemoveCard(class ACard* Card) override;
+	virtual void UpdateCollectionVisuals() override;
+	//*--- End of ACardCollectionInterface
 
 public:	
 	// Called every frame
