@@ -2,7 +2,7 @@
 
 
 #include "Card.h"
-#include "CardHand.h"
+#include "Hand.h"
 #include "Components/StaticMeshComponent.h"
 
 // Sets default values
@@ -19,9 +19,9 @@ ACard::ACard()
 }
 
 //TODO: This function shouldn't have to know anything about decks or hands, all these infos should be in some sort of manager class maybe
-void ACard::PlayCard(ADiscardedDeckActor* DiscardedDeck, ACardHand* Hand)
+void ACard::PlayCard(ADiscardedDeck* DiscardedDeck, AHand* Hand)
 {
-	checkf(Hand, TEXT("There is no hand, this shouldn't happen! Make sure CardHand is set"));
+	checkf(Hand, TEXT("There is no hand, this shouldn't happen! Make sure Hand is set"));
 	if (Hand)
 	{
 		checkf(DiscardedDeck, TEXT("There is no discarded deck to put cards into, this shouldn't happen! Make sure DiscardedDeck is set"));

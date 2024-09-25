@@ -5,25 +5,25 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Templates/SubclassOf.h"
-#include "DeckActor.generated.h"
+#include "Deck.generated.h"
 
 UCLASS()
-class ICAN_CARD_GAME_API ADeckActor : public AActor
+class ICAN_CARD_GAME_API ADeck : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ADeckActor();
+	ADeck();
 
 	UPROPERTY(EditAnywhere)
 	int Capacity = 50;
 
 	UPROPERTY(EditAnywhere)
-	class ACardHand* CardHand = nullptr;
+	class AHand* Hand = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	class ADiscardedDeckActor* DiscardedDeck = nullptr;
+	class ADiscardedDeck* DiscardedDeck = nullptr;
 
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* StaticMeshComponent = nullptr;

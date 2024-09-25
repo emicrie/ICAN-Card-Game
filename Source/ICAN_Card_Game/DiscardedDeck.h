@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "DiscardedDeckActor.generated.h"
+#include "DiscardedDeck.generated.h"
 
 UCLASS()
-class ICAN_CARD_GAME_API ADiscardedDeckActor : public AActor
+class ICAN_CARD_GAME_API ADiscardedDeck : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ADiscardedDeckActor();
+	ADiscardedDeck();
 
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* StaticMeshComponent = nullptr;
