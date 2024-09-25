@@ -1,9 +1,9 @@
-#include "DiscardedDeckActor.h"
+#include "DiscardedDeck.h"
 #include "Card.h"
 // Fill out your copyright notice in the Description page of Project Settings.
 
 // Sets default values
-ADiscardedDeckActor::ADiscardedDeckActor()
+ADiscardedDeck::ADiscardedDeck()
 {
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh Comp"));
 	StaticMeshComponent->SetupAttachment(RootComponent);
@@ -12,7 +12,7 @@ ADiscardedDeckActor::ADiscardedDeckActor()
 
 }
 
-void ADiscardedDeckActor::PutInDiscard(ACard* CardToDiscard)
+void ADiscardedDeck::PutInDiscard(ACard* CardToDiscard)
 {
 	FVector ActorLocation = GetActorLocation();
 	FVector Og;
@@ -29,14 +29,14 @@ void ADiscardedDeckActor::PutInDiscard(ACard* CardToDiscard)
 }
 
 // Called when the game starts or when spawned
-void ADiscardedDeckActor::BeginPlay()
+void ADiscardedDeck::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void ADiscardedDeckActor::Tick(float DeltaTime)
+void ADiscardedDeck::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 

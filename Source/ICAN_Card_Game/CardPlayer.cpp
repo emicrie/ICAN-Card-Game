@@ -10,10 +10,10 @@
 #include "CardPlayerController.h"
 
 //TODO: References to such elements should be put in a manager
-#include "DeckActor.h"
-#include "DiscardedDeckActor.h"
+#include "Deck.h"
+#include "DiscardedDeck.h"
 #include "Card.h"
-#include "CardHand.h"
+#include "Hand.h"
 
 // Sets default values
 ACardPlayer::ACardPlayer()
@@ -63,7 +63,7 @@ void ACardPlayer::OnClick()
 
 		if (HitResult.bBlockingHit)
 		{
-			ADeckActor* Deck = Cast<ADeckActor>(HitResult.GetActor());
+			ADeck* Deck = Cast<ADeck>(HitResult.GetActor());
 			if (Deck)
 			{
 				Deck->DrawCard(1);
@@ -77,14 +77,14 @@ void ACardPlayer::OnClick()
 		if (HitResult.bBlockingHit)
 		{
 			ACard* Card = Cast<ACard>(HitResult.GetActor());
-			if (Card)
+			if (Card && (Card->Status == ECardStatus::IN_HAND))
 			{
 				TArray<AActor*> dest;
-				UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADiscardedDeckActor::StaticClass(), dest);
-				ADiscardedDeckActor* DiscDeck= Cast<ADiscardedDeckActor>(dest[0]);
+				UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADiscardedDeck::StaticClass(), dest);
+				ADiscardedDeck* DiscDeck= Cast<ADiscardedDeck>(dest[0]);
 
-				UGameplayStatics::GetAllActorsOfClass(GetWorld(), ACardHand::StaticClass(), dest);
-				ACardHand* Hand = Cast<ACardHand>(dest[0]);
+				UGameplayStatics::GetAllActorsOfClass(GetWorld(), AHand::StaticClass(), dest);
+				AHand* Hand = Cast<AHand>(dest[0]);
 
 				Card->PlayCard(DiscDeck, Hand);
 			}

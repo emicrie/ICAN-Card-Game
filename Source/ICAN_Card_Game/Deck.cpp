@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "DeckActor.h"
+#include "Deck.h"
 #include "Card.h"
-#include "CardHand.h"
-#include "DiscardedDeckActor.h"
+#include "Hand.h"
+#include "DiscardedDeck.h"
 #include "Components/StaticMeshComponent.h"
 
 // Sets default values
-ADeckActor::ADeckActor()
+ADeck::ADeck()
 {
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh Comp"));
 	StaticMeshComponent->SetupAttachment(RootComponent);
@@ -17,7 +17,7 @@ ADeckActor::ADeckActor()
 
 }
 
-void ADeckActor::FillDeck()
+void ADeck::FillDeck()
 {
 	int Index = 0;
 
@@ -55,34 +55,34 @@ void ADeckActor::FillDeck()
 		}
 	}
 
-	CardHand->DisplayHand();
+	Hand->DisplayHand();
 }
 
-void ADeckActor::DrawCard(int NrOfCardsToDraw)
+void ADeck::DrawCard(int NrOfCardsToDraw)
 {
 	PopulateHand(NrOfCardsToDraw);
 }
 
-void ADeckActor::PopulateHand(int NumberOfCardsToPutInHand)
+void ADeck::PopulateHand(int NumberOfCardsToPutInHand)
 {
-	checkf(CardHand, TEXT("There is no hand to put cards into, this shouldn't happen! Make sure CardHand is set"));
-	if (CardHand)
+	checkf(Hand, TEXT("There is no hand to put cards into, this shouldn't happen! Make sure Hand is set"));
+	if (Hand)
 	{
 		for (int i = 0; i < NumberOfCardsToPutInHand; ++i)
 		{
-			if (CardHand->CardsInHands.Num() < CardHand->MaxCapacity && SpawnedCardsList.Num() > 0)
+			if (Hand->CardsInHands.Num() < Hand->MaxCapacity && SpawnedCardsList.Num() > 0)
 			{
-				CardHand->CardsInHands.Insert(Cast<ACard>(SpawnedCardsList[i]), 0);
+				Hand->CardsInHands.Insert(Cast<ACard>(SpawnedCardsList[i]), 0);
 				SpawnedCardsList.RemoveAt(i);
-				Cast<ACard>(CardHand->CardsInHands[0])->Status = ECardStatus::IN_HAND;
-				CardHand->DisplayHand();
+				Hand->CardsInHands[0]->Status = ECardStatus::IN_HAND;
+				Hand->DisplayHand();
 			}
 		}
 	}
 }
 
 // Called when the game starts or when spawned
-void ADeckActor::BeginPlay()
+void ADeck::BeginPlay()
 {
 	Super::BeginPlay();
 	FillDeck();
@@ -90,7 +90,7 @@ void ADeckActor::BeginPlay()
 }
 
 // Called every frame
-void ADeckActor::Tick(float DeltaTime)
+void ADeck::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 

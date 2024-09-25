@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "CardHand.generated.h"
+#include "Hand.generated.h"
 
 UCLASS()
-class ICAN_CARD_GAME_API ACardHand : public AActor
+class ICAN_CARD_GAME_API AHand : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ACardHand();
+	AHand();
 
 	UPROPERTY(EditAnywhere)
 	TArray<class ACard*> CardsInHands;
