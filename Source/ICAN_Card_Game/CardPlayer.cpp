@@ -82,6 +82,7 @@ void ACardPlayer::OnClick()
 			ACard* Card = Cast<ACard>(HitResult.GetActor());
 			if (Card && (Card->Status == ECardStatus::IN_HAND))
 			{
+				Card->PlayCard();
 				CollectionManager->MoveBetweenCollections(CollectionManager->Hand, CollectionManager->DiscardedDeck, Card);
 			}
 		}

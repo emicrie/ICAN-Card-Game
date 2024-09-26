@@ -33,3 +33,7 @@ void ACard::Tick(float DeltaTime)
 
 }
 
+void ACard::PlayCard()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Playing %s !"), *GetName());
+}

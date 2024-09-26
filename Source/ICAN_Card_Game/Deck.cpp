@@ -24,15 +24,13 @@ void ADeck::FillDeck()
 	checkf(PossibleCardsList.Num() > 0, TEXT("No cards were placed in the possible cards list"));
 	if (PossibleCardsList.Num() > 0)
 	{
-		while (SpawnedCardsList.Num() < Capacity)
+		while (Cards.Num() < Capacity)
 		{
 			int CardIndex = FMath::RandRange(0, PossibleCardsList.Num() - 1);
 			FActorSpawnParameters SpawnInfo;
 			AActor* MySpawnedActor = GetWorld()->SpawnActor<ACard>(PossibleCardsList[CardIndex], SpawnInfo);
 			if (MySpawnedActor)
 			{
-				SpawnedCardsList.Add(Cast<ACard>(MySpawnedActor));
-
 				if (!AddCard(Cast<ACard>(MySpawnedActor)))
 				{
 					UE_LOG(LogTemp, Error, TEXT("Card %s couldn't be added to the deck"), PossibleCardsList[CardIndex].Get());
@@ -86,15 +84,17 @@ void ADeck::UpdateCollectionVisuals()
 
 	GetActorBounds(true, Og, BoxExtent);
 
+	int Index = Cards.Num() - 1;
 	for (int i = 0; i < Cards.Num(); i++)
 	{
 		FVector Location(ActorLocation.X, ActorLocation.Y, (ActorLocation.Z - BoxExtent.Z) + (i * 1.0f));
 		FRotator Rotation(0.0f, 0.0f, 0.0f);
 		FVector Scale = FVector(0.2f, 0.2f, 0.2f);
 
-		Cards[i]->SetActorLocation(Location);
-		Cards[i]->SetActorRotation(Rotation);
-		Cards[i]->SetActorScale3D(Scale);
+		Cards[Index]->SetActorLocation(Location);
+		Cards[Index]->SetActorRotation(Rotation);
+		Cards[Index]->SetActorScale3D(Scale);
+		Index--;
 	}
 }
 
