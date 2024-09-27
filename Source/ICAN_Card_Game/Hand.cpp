@@ -55,7 +55,7 @@ void AHand::UpdateCollectionVisuals()
 		Cards[i]->GetActorBounds(true, Og, BoxExtent);
 
 		FVector Location(ActorLocation.X, ActorLocation.Y + ((i * (BoxExtent.Y * 2.5f))), ActorLocation.Z + (i * 0.001f));
-		FRotator Rotation(90.0f, 0.0f, 0.0f);
+		FRotator Rotation(-90.0f, 0.0f, 0.0f);
 
 		Cast<AActor>(Cards[i])->SetActorLocation(Location);
 		Cast<AActor>(Cards[i])->SetActorRotation(Rotation);
