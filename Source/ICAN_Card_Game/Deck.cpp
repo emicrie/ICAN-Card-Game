@@ -5,8 +5,6 @@
 #include "DiscardedDeck.h"
 #include "Components/StaticMeshComponent.h"
 
-UE_DISABLE_OPTIMIZATION
-
 // Sets default values
 ADeck::ADeck()
 {
@@ -88,7 +86,7 @@ void ADeck::UpdateCollectionVisuals()
 	for (int i = 0; i < Cards.Num(); i++)
 	{
 		FVector Location(ActorLocation.X, ActorLocation.Y, (ActorLocation.Z - BoxExtent.Z) + (i * 1.0f));
-		FRotator Rotation(0.0f, 0.0f, 0.0f);
+		FRotator Rotation(0.0f, 180.0f, 180.0f);
 		FVector Scale = FVector(0.2f, 0.2f, 0.2f);
 
 		Cards[Index]->SetActorLocation(Location);
