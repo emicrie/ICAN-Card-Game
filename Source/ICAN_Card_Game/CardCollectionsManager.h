@@ -15,18 +15,18 @@ class ICAN_CARD_GAME_API UCardCollectionsManager : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UCardCollectionsManager();
 
 	UPROPERTY(EditAnywhere)
-	ADeck* Deck;
+	ADeck* Deck = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	ADiscardedDeck* DiscardedDeck;
+	ADiscardedDeck* DiscardedDeck = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	AHand* Hand;
+	AHand* Hand = nullptr;
 
 protected:
 	// Called when the game starts
@@ -40,10 +40,18 @@ public:
 
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
-	bool MoveBetweenCollections(ACardCollection* A, ACardCollection* B, ACard* Card);
+	bool MoveBetweenCollections(ACardCollection* A, ACardCollection* B, ACard* Card, const int IndexToMoveAt = -1);
+
+	static bool SwapCard(class ACard*& CardA, class ACard*& CardB);
 
 	UFUNCTION(BlueprintCallable, Category = "CardCollections singleton")
 	static UCardCollectionsManager* GetInstance();
 
-		
+	void DeselectHand();
+	void SelectCard(ACard* Card);
+
+	UPROPERTY()
+	ACard* SelectedCard = nullptr;
+	
+	inline bool HasASelectedCardInHand() const {return SelectedCard != nullptr;}
 };

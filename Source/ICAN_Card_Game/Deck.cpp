@@ -22,7 +22,7 @@ void ADeck::FillDeck()
 	checkf(PossibleCardsList.Num() > 0, TEXT("No cards were placed in the possible cards list"));
 	if (PossibleCardsList.Num() > 0)
 	{
-		while (Cards.Num() < Capacity)
+		while (Cards.Num() < MaxCapacity)
 		{
 			int CardIndex = FMath::RandRange(0, PossibleCardsList.Num() - 1);
 			FActorSpawnParameters SpawnInfo;
@@ -51,7 +51,7 @@ void ADeck::BeginPlay()
 
 bool ADeck::AddCard(ACard* Card)
 {
-	if (Card && Cards.Num() < Capacity)
+	if (Card && Cards.Num() < MaxCapacity)
 	{
 		Cards.Insert(Card, 0);
 		Card->Status = ECardStatus::IN_DECK;

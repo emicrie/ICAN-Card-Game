@@ -12,10 +12,10 @@ class ICAN_CARD_GAME_API ACardCollection : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
+public:
 	// Sets default values for this actor's properties
 	ACardCollection();
-
+	
 	UPROPERTY(EditAnywhere)
 	TArray<ACard*> Cards;
 
@@ -26,7 +26,13 @@ public:
 	bool bInfiniteCapacity = false;
 
 	UFUNCTION(BlueprintCallable)
+	virtual void InitCollection();
+
+	UFUNCTION(BlueprintCallable)
 	virtual bool AddCard(ACard* Card);
+
+	UFUNCTION(BlueprintCallable)
+	virtual bool SetCard(ACard* Card, const int Index);
 
 	UFUNCTION(BlueprintCallable)
 	virtual bool RemoveCard(ACard* Card);
@@ -37,9 +43,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual bool Shuffle();
 
+	UFUNCTION(BlueprintCallable)
+	virtual bool IsCollectionFull();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 public:	
 	// Called every frame

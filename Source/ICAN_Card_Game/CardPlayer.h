@@ -42,6 +42,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
+	UPROPERTY()
 	class UCardCollectionsManager* CollectionManager = nullptr;
 
 };

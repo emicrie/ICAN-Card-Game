@@ -12,7 +12,7 @@ enum class ECardStatus : uint8 {
 	IN_DECK = 0 UMETA(DisplayName = "DECK"),
 	IN_HAND = 1  UMETA(DisplayName = "HAND"),
 	IN_DISCARD = 2     UMETA(DisplayName = "DISCARD"),
-	PLAYED = 3     UMETA(DisplayName = "PLAYED")
+	IN_SLOT = 3     UMETA(DisplayName = "IN_SLOT")
 };
 
 UCLASS()
@@ -32,6 +32,9 @@ public:
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* MeshComp = nullptr;
+
+	bool bIsCardSelected = false;
+	bool bIsCardSet = false;
 
 protected:
 	// Called when the game starts or when spawned

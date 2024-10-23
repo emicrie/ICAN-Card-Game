@@ -14,6 +14,7 @@
 #include "Deck.h"
 #include "DiscardedDeck.h"
 #include "Card.h"
+#include "CardSlotComponent.h"
 #include "Hand.h"
 
 // Sets default values
@@ -82,8 +83,23 @@ void ACardPlayer::OnClick()
 			ACard* Card = Cast<ACard>(HitResult.GetActor());
 			if (Card && (Card->Status == ECardStatus::IN_HAND))
 			{
-				Card->PlayCard();
-				CollectionManager->MoveBetweenCollections(CollectionManager->Hand, CollectionManager->DiscardedDeck, Card);
+				CollectionManager->DeselectHand();
+				CollectionManager->SelectCard(Card);
+			}
+		}
+
+		GetWorld()->LineTraceSingleByChannel(HitResult, WorldPosition, WorldDirection * 10000,
+			ECollisionChannel::ECC_GameTraceChannel4);
+		
+		if (HitResult.bBlockingHit)
+		{
+			UCardSlotComponent* Comp = Cast<UCardSlotComponent>(HitResult.GetComponent());
+			if(Comp != nullptr)
+			{
+				if(CollectionManager->HasASelectedCardInHand())
+				{
+					Comp->Interact(CollectionManager->SelectedCard);
+				}
 			}
 		}
 

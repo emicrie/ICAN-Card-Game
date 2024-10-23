@@ -3,25 +3,38 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
 #include "CardCollection.h"
-#include "DiscardedDeck.generated.h"
+#include "PlayedCardMat.generated.h"
 
+/**
+ * 
+ */
 UCLASS()
-class ICAN_CARD_GAME_API ADiscardedDeck : public ACardCollection
+class ICAN_CARD_GAME_API APlayedCardMat : public ACardCollection
 {
 	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	ADiscardedDeck();
+
+public:
+
+	APlayedCardMat();
 
 	UPROPERTY(EditAnywhere)
-	class UStaticMeshComponent* StaticMeshComponent = nullptr;
+	class UCardSlotComponent* CardSlotComp = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	bool bFilled = false;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintCallable)
+	void GetSlotComps();
+
+	UFUNCTION(BlueprintCallable)
+	bool IsMatFilled();
+
+	TArray<class UCardSlotComponent*> SlotComps;
 
 public:	
 	// Called every frame
@@ -29,8 +42,11 @@ public:
 
 	//*--- ACardCollectionInterface
 	virtual bool AddCard(class ACard* Card) override;
+	virtual bool SetCard(ACard* Card, const int Index) override;
 	virtual bool RemoveCard(class ACard* Card) override;
 	virtual void UpdateCollectionVisuals() override;
+	virtual void InitCollection() override;
+	virtual bool IsCollectionFull() override;
 	//*--- End of ACardCollectionInterface
-
+	
 };
