@@ -52,6 +52,10 @@ bool UCardSlotComponent::Interact(ACard*& Card) const
 			if(OwnerCollection->IsCollectionFull())
 			{
 				UE_LOG(LogTemp, Warning, TEXT("The played mat has been filled!"));
+				if(Cast<APlayedCardMat>(OwnerCollection))
+				{
+					Cast<APlayedCardMat>(OwnerCollection)->ValidateFilledMat();
+				}
 			}
 			
 		}

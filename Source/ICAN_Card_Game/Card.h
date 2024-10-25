@@ -46,4 +46,7 @@ public:
 
 	void PlayCard();
 
+	UFUNCTION(BlueprintCallable)
+	inline UCardData* GetCardDataComp() {return CardDataComp;};
+
 };

@@ -44,14 +44,22 @@ void UCardCollectionsManager::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Instance = this;
-	// Ensure the instance is not garbage collected
-	Instance->AddToRoot();
+	if(!Instance)
+	{
+		Instance = this;
+		// Ensure the instance is not garbage collected
+		Instance->AddToRoot();
+	}
+
 }
 
 void UCardCollectionsManager::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
-	Instance->RemoveFromRoot();
+	if(Instance)
+	{
+		Instance->RemoveFromRoot();
+		Instance = nullptr;
+	}
 }
 
 

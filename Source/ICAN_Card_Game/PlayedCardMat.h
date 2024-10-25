@@ -31,9 +31,6 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void GetSlotComps();
 
-	UFUNCTION(BlueprintCallable)
-	bool IsMatFilled();
-
 	TArray<class UCardSlotComponent*> SlotComps;
 
 public:	
@@ -48,5 +45,8 @@ public:
 	virtual void InitCollection() override;
 	virtual bool IsCollectionFull() override;
 	//*--- End of ACardCollectionInterface
+
+	UFUNCTION(BlueprintCallable)
+	void ValidateFilledMat();
 	
 };

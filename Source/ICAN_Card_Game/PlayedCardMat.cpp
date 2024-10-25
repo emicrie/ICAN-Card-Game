@@ -3,6 +3,7 @@
 
 #include "PlayedCardMat.h"
 #include "CardSlotComponent.h"
+#include "ScoreCalculator.h"
 #include "Components/StaticMeshComponent.h"
 
 APlayedCardMat::APlayedCardMat()
@@ -60,6 +61,7 @@ bool APlayedCardMat::SetCard(ACard* Card, const int Index)
 		if(IsCollectionFull())
 		{
 			UE_LOG(LogTemp, Warning, TEXT("The played mat has been filled!"));
+			ValidateFilledMat();
 		}
 		return true;
 	}
@@ -111,19 +113,9 @@ void APlayedCardMat::GetSlotComps()
 	return  cs1.ID < cs2.ID; });
 }
 
-bool APlayedCardMat::IsMatFilled()
+void APlayedCardMat::ValidateFilledMat()
 {
-	bool bResult = true;
-	for(int i = 0; i < MaxCapacity; i++)
-	{
-		if(Cards[i] == nullptr || !Cards[i]->bIsCardSet)
-		{
-			bResult = false;
-			break;
-		}
-	}
-
-	return bResult;
+	UScoreCalculator::GetInstance()->FinalResult = UScoreCalculator::GetInstance()->CalculateScore(Cards);
 }
 
 void APlayedCardMat::Tick(float DeltaTime)

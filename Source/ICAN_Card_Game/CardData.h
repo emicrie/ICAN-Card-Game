@@ -16,9 +16,9 @@ public:
 	// Sets default values for this component's properties
 	UCardData();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString Name;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Value;
 
 protected:
