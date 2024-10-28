@@ -26,6 +26,7 @@ UScoreCalculator* UScoreCalculator::GetInstance()
 int UScoreCalculator::CalculateScore(TArray<ACard*> PlayedCards)
 {
 	float Score = 0.0f;
+	TextActor->GetTextRender()->SetText(FText::FromString(""));
 	
 	for(int i = 0; i < PlayedCards.Num(); i++)
 	{
