@@ -24,6 +24,9 @@ public:
 	// Sets default values for this actor's properties
 	ACard();
 
+	UPROPERTY(VisibleAnywhere, Category = "Online")
+	int CardID = -1;
+
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	ECardStatus Status = ECardStatus::IN_DECK;
 

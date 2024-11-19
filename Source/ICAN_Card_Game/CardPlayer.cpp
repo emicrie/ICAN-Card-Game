@@ -10,6 +10,8 @@
 #include "CardCollectionsManager.h"
 #include "CardPlayerController.h"
 
+#include "CGPlayerState.h"
+
 //TODO: References to such elements should be put in a manager
 #include "Deck.h"
 #include "DiscardedDeck.h"
@@ -71,6 +73,11 @@ void ACardPlayer::OnClick()
 			if (Deck && Deck->Cards.Num() > 0)
 			{
 				CollectionManager->MoveBetweenCollections(CollectionManager->Deck, CollectionManager->Hand, CollectionManager->Deck->Cards[0]);
+				ACGPlayerState* PlState = Cast<ACGPlayerState>(GetPlayerState());
+				if (PlState)
+				{
+					PlState->OnTest();
+				}
 			}
 			return;
 		}
