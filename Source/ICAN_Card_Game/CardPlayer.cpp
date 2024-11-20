@@ -76,7 +76,9 @@ void ACardPlayer::OnClick()
 				ACGPlayerState* PlState = Cast<ACGPlayerState>(GetPlayerState());
 				if (PlState)
 				{
+					//GetWorld()->GetGameState();
 					PlState->OnTest();
+					PlState->OnDrawCard();
 				}
 			}
 			return;

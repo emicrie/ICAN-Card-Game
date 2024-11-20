@@ -3,3 +3,7 @@
 
 #include "CGPlayerState.h"
 
+void ACGPlayerState::BeginPlay()
+{
+	Hand = NewObject<UReplicatedHand>(this, HandCollectionToUse.GetDefaultObject()->GetClass());
+}

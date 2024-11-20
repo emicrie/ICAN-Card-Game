@@ -25,9 +25,6 @@ public:
 	bool bFilled = false;
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 	UFUNCTION(BlueprintCallable)
 	void GetSlotComps();
 
@@ -36,6 +33,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void BeginPlay() override;
 
 	//*--- ACardCollectionInterface
 	virtual bool AddCard(class ACard* Card) override;

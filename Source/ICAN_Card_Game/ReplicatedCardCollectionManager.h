@@ -4,12 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
+#include "ReplicatedCardData.h"
 #include "ReplicatedCardCollectionManager.generated.h"
 
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType)
 class ICAN_CARD_GAME_API UReplicatedCardCollectionManager : public UObject
 {
 	GENERATED_BODY()
@@ -17,8 +18,8 @@ class ICAN_CARD_GAME_API UReplicatedCardCollectionManager : public UObject
 protected:
 
 public:
-	bool MoveBetweenCollections(UReplicatedCardCollectionManager* A, UReplicatedCardCollectionManager* B, int*& Card, const int IndexToMoveAt = -1);
+	bool MoveBetweenCollections(class UReplicatedCardCollection* A, class UReplicatedCardCollection* B, UReplicatedCardData* CardData, const int IndexToMoveAt = -1);
 
-	static bool SwapCard(int*& CardAID, int*& CardBID);
+	static bool SwapCard(UReplicatedCardData*& CardAID, UReplicatedCardData*& CardBID);
 	
 };

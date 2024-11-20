@@ -4,21 +4,31 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
+
+#include "ReplicatedHand.h"
+
 #include "CGPlayerState.generated.h"
 
-/**
- * 
- */
+//We might not need to replicated hands, but just in case we want a visual about it, I think it's best to put it in PlayerState
 UCLASS()
 class ICAN_CARD_GAME_API ACGPlayerState : public APlayerState
 {
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<int> Hand;
+	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Hand")
+	TSubclassOf<UReplicatedHand> HandCollectionToUse;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Hand Settings")
+	UReplicatedHand* Hand;
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnTest();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDrawCard();
+
 	
 };
