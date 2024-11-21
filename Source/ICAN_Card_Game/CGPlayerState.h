@@ -16,19 +16,30 @@ class ICAN_CARD_GAME_API ACGPlayerState : public APlayerState
 	GENERATED_BODY()
 
 public:
+	ACGPlayerState();
+
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Hand")
 	TSubclassOf<UReplicatedHand> HandCollectionToUse;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Hand Settings")
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Hand Settings")
 	UReplicatedHand* Hand;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hand Settings")
+	int HandSize;
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void ServerRequestOwnHand();
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnTest();
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnDrawCard();
+
+private:
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	
 };
