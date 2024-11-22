@@ -26,7 +26,7 @@ public:
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Hand Settings")
 	UReplicatedHand* Hand;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hand Settings")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Hand Settings")
 	int HandSize;
 
 	UFUNCTION(BlueprintImplementableEvent)

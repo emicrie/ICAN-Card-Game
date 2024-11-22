@@ -30,7 +30,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	TArray<TSubclassOf<class ACard>> PossibleCardsList;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void FillDeck();
 
 protected:

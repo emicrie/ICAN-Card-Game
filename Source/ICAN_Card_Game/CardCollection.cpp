@@ -2,6 +2,7 @@
 
 
 #include "CardCollection.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values
 ACardCollection::ACardCollection()
@@ -75,4 +76,11 @@ bool ACardCollection::IsCollectionFull()
 void ACardCollection::UpdateCollectionVisuals()
 {
 
+}
+
+void ACardCollection::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ACardCollection, Cards);
 }

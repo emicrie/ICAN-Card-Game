@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "CGGameState.h"
+#include "Net/UnrealNetwork.h"
 
 UReplicatedCardData* ACGGameState::CreateNewCardData(int ID)
 {
@@ -19,6 +20,12 @@ void ACGGameState::BeginPlay()
 
 	Deck = NewObject<UReplicatedDeck>(this, DeckCollectionToUse.GetDefaultObject()->GetClass());
 	PlayedCards = NewObject<UReplicatedPlayedCards>(this, PlayedCardsCollectionToUse.GetDefaultObject()->GetClass());
-
+	
 	OnStart();
+}
+
+void ACGGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	DOREPLIFETIME(ACGGameState, DeckSize);
+	DOREPLIFETIME(ACGGameState, Deck);
 }
