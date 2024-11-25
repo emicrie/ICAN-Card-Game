@@ -9,7 +9,7 @@ bool UReplicatedDeck::AddCard(UReplicatedCardData* Data)
 	{
 		Elements.Insert(Data, 0);
 		Data->Status = EReplicatedCardStatus::IN_DECK;
-		UpdateCollectionVisuals();
+		//UpdateCollectionVisuals();
 		return true;
 	}
 

@@ -18,7 +18,7 @@ public:
 	// Sets default values for this actor's properties
 	ACardCollection();
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(Replicated, EditAnywhere)
 	TArray<ACard*> Cards;
 
 	UPROPERTY(EditAnywhere, meta = (EditCondition = "!bInfiniteCapacity"))
@@ -66,5 +66,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+private:
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 };

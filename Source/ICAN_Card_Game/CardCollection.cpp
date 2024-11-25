@@ -4,6 +4,7 @@
 #include "CardCollection.h"
 #include "ReplicatedCardData.h"
 #include "Kismet/GameplayStatics.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values
 ACardCollection::ACardCollection()
@@ -97,4 +98,11 @@ bool ACardCollection::Shuffle()
 bool ACardCollection::IsCollectionFull()
 {
 	return Cards.Num() == MaxCapacity;
+}
+
+void ACardCollection::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ACardCollection, Cards);
 }

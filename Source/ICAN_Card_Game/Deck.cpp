@@ -45,7 +45,6 @@ void ADeck::FillDeck()
 void ADeck::BeginPlay()
 {
 	Super::BeginPlay();
-	FillDeck();
 	
 }
 
@@ -102,4 +101,3 @@ void ADeck::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
-
