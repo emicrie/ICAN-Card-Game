@@ -64,3 +64,8 @@ bool UReplicatedPlayedCards::IsCollectionFull()
 	}
 	return bIsFull;
 }
+
+inline ECardCollectionType UReplicatedPlayedCards::GetCollectionType()
+{
+	return ECardCollectionType::SLOT;
+}

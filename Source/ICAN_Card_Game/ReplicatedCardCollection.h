@@ -5,13 +5,14 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "ReplicatedCardData.h"
+#include "CardCollectionDelegates.h"
 #include "ReplicatedCardCollection.generated.h"
 
 /**
  * 
  */
 UCLASS(Blueprintable)
-class ICAN_CARD_GAME_API UReplicatedCardCollection : public UObject
+class ICAN_CARD_GAME_API UReplicatedCardCollection : public UObject, public ICardCollectionInterface
 {
 	GENERATED_BODY()
 
@@ -46,5 +47,14 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual bool IsCollectionFull();
-	
+
+protected:
+	UPROPERTY(BlueprintAssignable, Category = "Delegates")
+	FOnCollectionChanged OnCollectionChanged;
+
+	virtual ECardCollectionType GetCollectionType() override;
+
+
+public:
+	virtual FOnCollectionChanged& GetOnCollectionChanged() override { return OnCollectionChanged; }
 };

@@ -20,6 +20,7 @@ class ICAN_CARD_GAME_API UReplicatedPlayedCards : public UReplicatedCardCollecti
 	virtual bool RemoveCard(UReplicatedCardData* Data) override;
 	virtual void InitCollection() override;
 	virtual bool IsCollectionFull() override;
+	inline virtual ECardCollectionType GetCollectionType() override;
 	//*--- End of ACardCollectionInterface
 	
 };

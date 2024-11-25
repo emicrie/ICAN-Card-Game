@@ -23,5 +23,6 @@ public:
 	//*--- ACardCollectionInterface
 	virtual bool AddCard(class UReplicatedCardData* Card) override;
 	virtual bool RemoveCard(class UReplicatedCardData* Card) override;
+	virtual ECardCollectionType GetCollectionType() override;
 	//*--- End of ACardCollectionInterface
 };

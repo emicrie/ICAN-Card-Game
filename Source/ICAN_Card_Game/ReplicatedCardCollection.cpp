@@ -51,6 +51,11 @@ bool UReplicatedCardCollection::IsCollectionFull()
 	return Elements.Num() == MaxCapacity;
 }
 
+ECardCollectionType UReplicatedCardCollection::GetCollectionType()
+{
+	return ECardCollectionType::NONE;
+}
+
 void UReplicatedCardCollection::UpdateCollectionVisuals()
 {
 

@@ -2,6 +2,8 @@
 
 
 #include "CardCollection.h"
+#include "ReplicatedCardData.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ACardCollection::ACardCollection()
@@ -15,6 +17,21 @@ ACardCollection::ACardCollection()
 void ACardCollection::BeginPlay()
 {
 	Super::BeginPlay();
+
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsWithInterface(GetWorld(), UCardCollectionInterface::StaticClass(), FoundActors);
+
+	for (AActor* Actor : FoundActors)
+	{
+		if (ICardCollectionInterface* Interface = Cast<ICardCollectionInterface>(Actor))
+		{
+			if (Interface->GetCollectionType() == CollectionType)
+			{
+				Interface->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
+				break;
+			}
+		}
+	}
 	
 }
 
@@ -62,6 +79,16 @@ bool ACardCollection::RemoveCard(ACard* Card)
 	return true;
 }
 
+void ACardCollection::UpdateCollectionVisuals()
+{
+	
+}
+
+void ACardCollection::MatchVisualsToData(const UReplicatedCardCollection* Collection)
+{
+	UpdateCollectionVisualsToMatchCollectionData(Collection);
+}
+
 bool ACardCollection::Shuffle()
 {
 	return true;
@@ -70,9 +97,4 @@ bool ACardCollection::Shuffle()
 bool ACardCollection::IsCollectionFull()
 {
 	return Cards.Num() == MaxCapacity;
-}
-
-void ACardCollection::UpdateCollectionVisuals()
-{
-
 }

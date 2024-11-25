@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Card.h"
+#include "CardCollectionDelegates.h"
+#include "ReplicatedCardCollection.h"
 #include "CardCollection.generated.h"
 
 UCLASS(Abstract, Blueprintable)
@@ -37,8 +39,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual bool RemoveCard(ACard* Card);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 	virtual void UpdateCollectionVisuals();
+
+	UFUNCTION()
+	virtual void MatchVisualsToData(const UReplicatedCardCollection* Collection);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateCollectionVisualsToMatchCollectionData(const UReplicatedCardCollection* Collection);
 
 	UFUNCTION(BlueprintCallable)
 	virtual bool Shuffle();
@@ -51,6 +59,9 @@ protected:
 	virtual void BeginPlay() override;
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+	UPROPERTY(EditAnywhere, Category = "Card Collection")
+	ECardCollectionType CollectionType;
 
 public:	
 	// Called every frame

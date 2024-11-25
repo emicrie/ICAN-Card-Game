@@ -15,11 +15,8 @@ class ICAN_CARD_GAME_API UReplicatedCardCollectionManager : public UObject
 {
 	GENERATED_BODY()
 
-protected:
-
 public:
 	bool MoveBetweenCollections(class UReplicatedCardCollection* A, class UReplicatedCardCollection* B, UReplicatedCardData* CardData, const int IndexToMoveAt = -1);
 
-	static bool SwapCard(UReplicatedCardData*& CardAID, UReplicatedCardData*& CardBID);
-	
+	static bool SwapCard(UReplicatedCardData*& CardAID, UReplicatedCardData*& CardBID);	
 };

@@ -27,3 +27,8 @@ bool UReplicatedHand::RemoveCard(UReplicatedCardData* Data)
 
 	return false;
 }
+
+inline ECardCollectionType UReplicatedHand::GetCollectionType()
+{
+	return ECardCollectionType::HAND;
+}

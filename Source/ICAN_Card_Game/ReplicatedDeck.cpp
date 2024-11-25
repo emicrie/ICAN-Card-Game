@@ -26,3 +26,8 @@ bool UReplicatedDeck::RemoveCard(UReplicatedCardData* Data)
 
 	return false;
 }
+
+ECardCollectionType UReplicatedDeck::GetCollectionType()
+{
+	return ECardCollectionType::DECK;
+}
