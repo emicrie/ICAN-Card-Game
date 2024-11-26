@@ -54,14 +54,18 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual bool IsCollectionFull();
 
+	UFUNCTION()
+	void BindDynamicsToDelegate();
+
+	UPROPERTY(EditAnywhere, Category = "Card Collection")
+	ECardCollectionType CollectionType;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-
-	UPROPERTY(EditAnywhere, Category = "Card Collection")
-	ECardCollectionType CollectionType;
+	struct FTimerHandle InitTimer;
 
 public:	
 	// Called every frame

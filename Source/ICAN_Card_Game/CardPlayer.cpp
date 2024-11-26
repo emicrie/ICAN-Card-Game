@@ -12,6 +12,7 @@
 
 #include "CGPlayerState.h"
 #include "CGGameState.h"
+#include "CardCollectionDelegates.h"
 
 //TODO: References to such elements should be put in a manager
 #include "Deck.h"

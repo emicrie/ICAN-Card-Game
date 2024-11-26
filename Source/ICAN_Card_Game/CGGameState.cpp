@@ -27,6 +27,7 @@ void ACGGameState::BeginPlay()
 	CHECK_SUBCLASS_SET(ManagerToUse);
 	CollectionManager = NewObject<UReplicatedCardCollectionManager>(this, ManagerToUse.GetDefaultObject()->GetClass());
 	
+	UE_LOG(LogTemp, Log, TEXT("GameState BeginPlay"));
 	OnStart();
 }
 

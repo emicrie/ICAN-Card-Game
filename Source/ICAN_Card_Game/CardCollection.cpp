@@ -3,7 +3,10 @@
 
 #include "CardCollection.h"
 #include "ReplicatedCardData.h"
+#include "CardCollectionsManager.h"
 #include "Kismet/GameplayStatics.h"
+#include "CGGameState.h"
+#include "CGPlayerState.h"
 #include "Net/UnrealNetwork.h"
 
 // Sets default values
@@ -18,23 +21,7 @@ ACardCollection::ACardCollection()
 void ACardCollection::BeginPlay()
 {
 	Super::BeginPlay();
-
-	TArray<AActor*> FoundActors;
-	UGameplayStatics::GetAllActorsWithInterface(GetWorld(), UCardCollectionInterface::StaticClass(), FoundActors);
-
-	//TODO: GetAllActors returns Empty on BeginPlay + The replicated card collections are UObjects. One way to fix it could be to return the interfaces from the ReplicatedCardCollectionManager holding them, or maybe even AddDynamic directly in the manager
-	for (AActor* Actor : FoundActors)
-	{
-		if (ICardCollectionInterface* Interface = Cast<ICardCollectionInterface>(Actor))
-		{
-			if (Interface->GetCollectionType() == CollectionType)
-			{
-				Interface->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
-				break;
-			}
-		}
-	}
-	
+	GetWorld()->GetTimerManager().SetTimer(InitTimer, this, &ACardCollection::BindDynamicsToDelegate, 0.4f, false);
 }
 
 void ACardCollection::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -53,6 +40,37 @@ void ACardCollection::Tick(float DeltaTime)
 void ACardCollection::InitCollection()
 {
 	Cards.AddDefaulted(MaxCapacity);
+}
+
+void ACardCollection::BindDynamicsToDelegate()
+{
+	//TODO: This is disgusting and hard coded, but I'm too tired and got no time at this point
+
+	ACGGameState* GameState = Cast<ACGGameState>(GetWorld()->GetGameState());
+
+	if (Cast<ICardCollectionInterface>(GameState->Deck)->GetCollectionType() == CollectionType)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Found a fitting interface for deck"));
+		Cast<ICardCollectionInterface>(GameState->Deck)->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
+	}
+
+	if (Cast<ICardCollectionInterface>(GameState->PlayedCards)->GetCollectionType() == CollectionType)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Found a fitting interface for played cards"));
+		Cast<ICardCollectionInterface>(GameState->PlayedCards)->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
+	}
+
+	int Index = 0;
+	for (APlayerState* PlState : GameState->PlayerArray)
+	{
+		ACGPlayerState* State = Cast<ACGPlayerState>(PlState);
+		if (State != nullptr && (Cast<ICardCollectionInterface>(State->Hand)->GetCollectionType() == CollectionType))
+		{
+			UE_LOG(LogTemp, Error, TEXT("Found a fitting interface for hand of player %i"), Index);
+			State->Hand->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
+		}
+		Index++;
+	}
 }
 
 bool ACardCollection::AddCard(ACard* Card)

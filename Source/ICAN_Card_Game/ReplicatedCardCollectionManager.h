@@ -19,5 +19,5 @@ public:
 	bool MoveBetweenCollections(class UReplicatedCardCollection* A, class UReplicatedCardCollection* B, UReplicatedCardData* CardData, const int IndexToMoveAt = -1);
 	bool AddCard(UReplicatedCardCollection* A, UReplicatedCardData* CardData);
 
-	static bool SwapCard(UReplicatedCardData*& CardAID, UReplicatedCardData*& CardBID);	
+	static bool SwapCard(UReplicatedCardData*& CardAID, UReplicatedCardData*& CardBID);
 };

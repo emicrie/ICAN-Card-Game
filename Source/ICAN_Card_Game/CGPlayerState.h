@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerState.h"
 
 #include "ReplicatedHand.h"
+#include "Hand.h"
 
 #include "CGPlayerState.generated.h"
 
