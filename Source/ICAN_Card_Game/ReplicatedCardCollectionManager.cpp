@@ -31,8 +31,18 @@ bool UReplicatedCardCollectionManager::MoveBetweenCollections(UReplicatedCardCol
 		{
 			Result = Result && B->SetCard(CardData, IndexToMoveAt);
 		}
-		A->UpdateCollectionVisuals();
-		B->UpdateCollectionVisuals();
+
+		A->GetOnCollectionChanged().Broadcast(A);
+		B->GetOnCollectionChanged().Broadcast(B);
 	}
 	return Result;
+}
+
+bool UReplicatedCardCollectionManager::AddCard(UReplicatedCardCollection* A, UReplicatedCardData* CardData)
+{
+	if ((A->bInfiniteCapacity) || (!A->bInfiniteCapacity && (A->Elements.Num() < A->MaxCapacity)))
+	{
+		A->Elements.Insert(CardData, 0);
+	}
+	return true;
 }

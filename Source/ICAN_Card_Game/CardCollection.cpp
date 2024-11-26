@@ -22,6 +22,7 @@ void ACardCollection::BeginPlay()
 	TArray<AActor*> FoundActors;
 	UGameplayStatics::GetAllActorsWithInterface(GetWorld(), UCardCollectionInterface::StaticClass(), FoundActors);
 
+	//TODO: GetAllActors returns Empty on BeginPlay + The replicated card collections are UObjects. One way to fix it could be to return the interfaces from the ReplicatedCardCollectionManager holding them, or maybe even AddDynamic directly in the manager
 	for (AActor* Actor : FoundActors)
 	{
 		if (ICardCollectionInterface* Interface = Cast<ICardCollectionInterface>(Actor))

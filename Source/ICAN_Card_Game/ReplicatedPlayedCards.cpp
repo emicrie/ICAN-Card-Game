@@ -12,7 +12,6 @@ bool UReplicatedPlayedCards::AddCard(UReplicatedCardData* Data)
 		Elements[0]->bIsCardSet = true;
 		return true;
 	}
-
 	return false;
 }
 
@@ -43,7 +42,6 @@ bool UReplicatedPlayedCards::SetCard(UReplicatedCardData* Data, const int Index)
 		}
 		return true;
 	}
-
 	return false;
 }
 

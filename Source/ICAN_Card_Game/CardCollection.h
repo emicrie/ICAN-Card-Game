@@ -68,7 +68,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-private:
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 };

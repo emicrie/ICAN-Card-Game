@@ -14,7 +14,6 @@ bool UReplicatedCardCollection::AddCard(UReplicatedCardData* Data)
 	{
 		Elements.Insert(Data, 0);
 		Data->Status = EReplicatedCardStatus::IN_DECK;
-		UpdateCollectionVisuals();
 		return true;
 	}
 
@@ -30,9 +29,9 @@ bool UReplicatedCardCollection::SetCard(UReplicatedCardData* Data, const int Ind
 			Elements[Index] = Data;
 			Elements[Index]->bIsCardSet = true;
 		}
+
 		return true;
 	}
-	
 	return false;
 }
 
@@ -58,5 +57,5 @@ ECardCollectionType UReplicatedCardCollection::GetCollectionType()
 
 void UReplicatedCardCollection::UpdateCollectionVisuals()
 {
-
+	OnCollectionChanged.Broadcast(this);
 }

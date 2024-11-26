@@ -22,6 +22,9 @@ class ICAN_CARD_GAME_API ACGGameState : public AGameState
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Manager")
+	TSubclassOf<UReplicatedCardCollectionManager> ManagerToUse;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Deck")
 	TSubclassOf<UReplicatedDeck> DeckCollectionToUse;
 

@@ -9,10 +9,8 @@ bool UReplicatedDeck::AddCard(UReplicatedCardData* Data)
 	{
 		Elements.Insert(Data, 0);
 		Data->Status = EReplicatedCardStatus::IN_DECK;
-		//UpdateCollectionVisuals();
 		return true;
 	}
-
 	return false;
 }
 
@@ -23,7 +21,6 @@ bool UReplicatedDeck::RemoveCard(UReplicatedCardData* Data)
 		Elements.Remove(Data);
 		return true;
 	}
-
 	return false;
 }
 
