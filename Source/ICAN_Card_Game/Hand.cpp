@@ -24,7 +24,6 @@ bool AHand::AddCard(ACard* Card)
 	{
 		Cards.Add(Card);
 		Card->Status = ECardStatus::IN_HAND;
-		UpdateCollectionVisuals();
 		return true;
 	}
 
@@ -36,7 +35,6 @@ bool AHand::RemoveCard(ACard* Card)
 	if (Card && Cards.Num() > 0)
 	{
 		Cards.Remove(Card);
-		UpdateCollectionVisuals();
 		return true;
 	}
 

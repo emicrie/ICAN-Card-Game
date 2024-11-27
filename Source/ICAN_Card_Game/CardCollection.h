@@ -18,7 +18,7 @@ public:
 	// Sets default values for this actor's properties
 	ACardCollection();
 	
-	UPROPERTY(Replicated, EditAnywhere)
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite)
 	TArray<ACard*> Cards;
 
 	UPROPERTY(EditAnywhere, meta = (EditCondition = "!bInfiniteCapacity"))

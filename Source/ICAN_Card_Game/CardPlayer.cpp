@@ -75,16 +75,20 @@ void ACardPlayer::OnClick()
 		if (HitResult.bBlockingHit)
 		{
 			//JUST TESTING, REMOVE THIS LATER
-			ADeck* Deck = Cast<ADeck>(HitResult.GetActor());
-			if (Deck)
-			{
-				ACGPlayerState* PlState = Cast<ACGPlayerState>(GetPlayerState());
-
-				GameState->CollectionManager->MoveBetweenCollections(GameState->Deck, PlState->Hand, GameState->Deck->Elements[0]);
-			}
+			//if (Deck)
+			//{
+			//	ACGPlayerState* PlState = Cast<ACGPlayerState>(GetPlayerState());
+			//
+			//	if (GameState->Deck->Elements.Num() > 0)
+			//	{
+			//		GameState->CollectionManager->MoveBetweenCollections(GameState->Deck, PlState->Hand, GameState->Deck->Elements[0]);
+			//	}
+			//}
 			//
 
-			if (Deck && Deck->Cards.Num() > 0)
+			ADeck* Deck = Cast<ADeck>(HitResult.GetActor());
+
+			if (Deck && GameState->Deck->Elements.Num() > 0)
 			{
 				//CollectionManager->MoveBetweenCollections(CollectionManager->Deck, CollectionManager->Hand, CollectionManager->Deck->Cards[0]);
 				ACGPlayerState* PlState = Cast<ACGPlayerState>(GetPlayerState());

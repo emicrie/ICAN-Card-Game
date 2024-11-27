@@ -38,7 +38,6 @@ void ADeck::FillDeck()
 			Index++;
 		}
 	}
-	UpdateCollectionVisuals();
 }
 
 // Called when the game starts or when spawned
@@ -54,7 +53,6 @@ bool ADeck::AddCard(ACard* Card)
 	{
 		Cards.Insert(Card, 0);
 		Card->Status = ECardStatus::IN_DECK;
-		UpdateCollectionVisuals();
 		return true;
 	}
 	
@@ -66,7 +64,6 @@ bool ADeck::RemoveCard(class ACard* Card)
 	if (Card && Cards.Num() > 0)
 	{
 		Cards.Remove(Card);
-		UpdateCollectionVisuals();
 		return true;
 	}
 

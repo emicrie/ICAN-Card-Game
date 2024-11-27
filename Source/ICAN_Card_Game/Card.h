@@ -15,7 +15,7 @@ enum class ECardStatus : uint8 {
 	IN_SLOT = 3     UMETA(DisplayName = "IN_SLOT")
 };
 
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class ICAN_CARD_GAME_API ACard : public AActor
 {
 	GENERATED_BODY()

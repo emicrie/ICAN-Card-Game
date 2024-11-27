@@ -31,7 +31,6 @@ bool ADiscardedDeck::AddCard(ACard* Card)
 	{
 		Cards.Add(Card);
 		Card->Status = ECardStatus::IN_DISCARD;
-		UpdateCollectionVisuals();
 		return true;
 	}
 
@@ -43,7 +42,6 @@ bool ADiscardedDeck::RemoveCard(ACard* Card)
 	if (Card && Cards.Num() > 0)
 	{
 		Cards.Remove(Card);
-		UpdateCollectionVisuals();
 		return true;
 	}
 
