@@ -3,8 +3,6 @@
 
 #include "ReplicatedDeck.h"
 
-UE_DISABLE_OPTIMIZATION
-
 bool UReplicatedDeck::AddCard(UReplicatedCardData* Data)
 {
 	if (Elements.Num() < MaxCapacity)

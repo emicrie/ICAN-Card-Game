@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "Card.h"
 #include "CardCollectionDelegates.h"
-#include "ReplicatedCardCollection.h"
 #include "CardCollection.generated.h"
 
 UCLASS(Abstract, Blueprintable)
@@ -42,11 +41,14 @@ public:
 	UFUNCTION()
 	virtual void UpdateCollectionVisuals();
 
-	UFUNCTION()
+	UFUNCTION(Server, Unreliable)
 	virtual void MatchVisualsToData(const UReplicatedCardCollection* Collection);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void UpdateCollectionVisualsToMatchCollectionData(const UReplicatedCardCollection* Collection);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void EmptyCardsList();
 
 	UFUNCTION(BlueprintCallable)
 	virtual bool Shuffle();

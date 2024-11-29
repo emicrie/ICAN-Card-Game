@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-#include "CGGameState.h"
+#include "CardGameMode.h"
 
 #define CHECK_SUBCLASS_SET(x) checkf(x, TEXT("The variable %s hasn't been set. It is required to set its value in editor before starting the game!"));
 
-UReplicatedCardData* ACGGameState::CreateNewCardData(int ID)
+UReplicatedCardData* ACardGameMode::CreateNewCardData(int ID)
 {
 	UReplicatedCardData* Data = NewObject<UReplicatedCardData>(this);
 	if (Data)
@@ -15,9 +15,10 @@ UReplicatedCardData* ACGGameState::CreateNewCardData(int ID)
 	return Data;
 }
 
-void ACGGameState::BeginPlay()
+void ACardGameMode::BeginPlay()
 {
-#if 0
+	Super::BeginPlay();
+
 	CHECK_SUBCLASS_SET(DeckCollectionToUse);
 	Deck = NewObject<UReplicatedDeck>(this, DeckCollectionToUse.GetDefaultObject()->GetClass());
 	CHECK_SUBCLASS_SET(PlayedCardsCollectionToUse);
@@ -25,7 +26,7 @@ void ACGGameState::BeginPlay()
 	CHECK_SUBCLASS_SET(ManagerToUse);
 	CollectionManager = NewObject<UReplicatedCardCollectionManager>(this, ManagerToUse.GetDefaultObject()->GetClass());
 	
-	UE_LOG(LogTemp, Log, TEXT("GameState BeginPlay"));
+	UE_LOG(LogTemp, Log, TEXT("GameMode BeginPlay"));
+
 	OnStart();
-#endif
 }

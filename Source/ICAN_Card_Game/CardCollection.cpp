@@ -2,11 +2,11 @@
 
 
 #include "CardCollection.h"
-#include "ReplicatedCardData.h"
-#include "CardCollectionsManager.h"
-#include "Kismet/GameplayStatics.h"
+
+#include "CardGameMode.h"
 #include "CGGameState.h"
 #include "CGPlayerState.h"
+#include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
 
 // Sets default values
@@ -46,21 +46,26 @@ void ACardCollection::BindDynamicsToDelegate()
 {
 	//TODO: This is disgusting and hard coded, but I'm too tired and got no time at this point
 
-	ACGGameState* GameState = Cast<ACGGameState>(GetWorld()->GetGameState());
-
-	if (Cast<ICardCollectionInterface>(GameState->Deck)->GetCollectionType() == CollectionType)
+	if(HasAuthority())
 	{
-		UE_LOG(LogTemp, Error, TEXT("Found a fitting interface for deck"));
-		Cast<ICardCollectionInterface>(GameState->Deck)->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
-	}
+		ACardGameMode* GameMode = Cast<ACardGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+		checkf(GameMode, TEXT("Game Mode is null"));
 
-	if (Cast<ICardCollectionInterface>(GameState->PlayedCards)->GetCollectionType() == CollectionType)
-	{
-		UE_LOG(LogTemp, Error, TEXT("Found a fitting interface for played cards"));
-		Cast<ICardCollectionInterface>(GameState->PlayedCards)->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
+		if (Cast<ICardCollectionInterface>(GameMode->Deck)->GetCollectionType() == CollectionType)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Found a fitting interface for deck"));
+			Cast<ICardCollectionInterface>(GameMode->Deck)->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
+		}
+
+		if (Cast<ICardCollectionInterface>(GameMode->PlayedCards)->GetCollectionType() == CollectionType)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Found a fitting interface for played cards"));
+			Cast<ICardCollectionInterface>(GameMode->PlayedCards)->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
+		}
 	}
 
 	int Index = 0;
+	ACGGameState* GameState = Cast<ACGGameState>(GetWorld()->GetGameState());
 	for (APlayerState* PlState : GameState->PlayerArray)
 	{
 		ACGPlayerState* State = Cast<ACGPlayerState>(PlState);
@@ -104,10 +109,15 @@ void ACardCollection::UpdateCollectionVisuals()
 	
 }
 
-void ACardCollection::MatchVisualsToData(const UReplicatedCardCollection* Collection)
+void ACardCollection::MatchVisualsToData_Implementation(const UReplicatedCardCollection* Collection)
 {
 	UpdateCollectionVisualsToMatchCollectionData(Collection);
 }
+
+//void ACardCollection::MatchVisualsToData(const UReplicatedCardCollection* Collection)
+//{
+//	UpdateCollectionVisualsToMatchCollectionData(Collection);
+//}
 
 bool ACardCollection::Shuffle()
 {

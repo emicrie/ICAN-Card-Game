@@ -3,9 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
 #include "ReplicatedCardData.h"
 #include "CardCollectionDelegates.h"
+#include "Net/UnrealNetwork.h"
 #include "ReplicatedCardCollection.generated.h"
 
 /**
@@ -17,7 +17,7 @@ class ICAN_CARD_GAME_API UReplicatedCardCollection : public UObject, public ICar
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite)
 	TArray<UReplicatedCardData*> Elements;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (EditCondition = "!bInfiniteCapacity"))
@@ -57,4 +57,7 @@ protected:
 
 public:
 	virtual FOnCollectionChanged& GetOnCollectionChanged() override { return OnCollectionChanged; }
+
+private:
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

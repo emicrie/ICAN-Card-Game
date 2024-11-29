@@ -18,6 +18,7 @@
 #include "Deck.h"
 #include "DiscardedDeck.h"
 #include "Card.h"
+#include "CardGameMode.h"
 #include "CardSlotComponent.h"
 #include "Hand.h"
 
@@ -68,72 +69,61 @@ void ACardPlayer::OnClick()
 		//DrawDebugLine(GetWorld(), WorldPosition, WorldDirection * 10000, FColor::White, true);
 		GetWorld()->LineTraceSingleByChannel(HitResult, WorldPosition, WorldDirection * 10000,
 			ECollisionChannel::ECC_GameTraceChannel1);
-
-		//TODO: Cache this variable
-		ACGGameState* GameState = Cast<ACGGameState>(GetWorld()->GetGameState());
-
-		if (HitResult.bBlockingHit)
-		{
-			//JUST TESTING, REMOVE THIS LATER
-			//if (Deck)
-			//{
-			//	ACGPlayerState* PlState = Cast<ACGPlayerState>(GetPlayerState());
-			//
-			//	if (GameState->Deck->Elements.Num() > 0)
-			//	{
-			//		GameState->CollectionManager->MoveBetweenCollections(GameState->Deck, PlState->Hand, GameState->Deck->Elements[0]);
-			//	}
-			//}
-			//
-
-			ADeck* Deck = Cast<ADeck>(HitResult.GetActor());
-
-			if (Deck && GameState->Deck->Elements.Num() > 0)
-			{
-				//CollectionManager->MoveBetweenCollections(CollectionManager->Deck, CollectionManager->Hand, CollectionManager->Deck->Cards[0]);
-				ACGPlayerState* PlState = Cast<ACGPlayerState>(GetPlayerState());
-				if (PlState)
-				{
-					if (GameState)
-					{
-						GameState->CollectionManager->MoveBetweenCollections(GameState->Deck, PlState->Hand, GameState->Deck->Elements[0]);
-					}
-
-					//PlState->OnTest();
-					//PlState->OnDrawCard();
-				}
-			}
-			return;
-		}
-
-		GetWorld()->LineTraceSingleByChannel(HitResult, WorldPosition, WorldDirection * 10000,
-			ECollisionChannel::ECC_GameTraceChannel2);
-
-		if (HitResult.bBlockingHit)
-		{
-			ACard* Card = Cast<ACard>(HitResult.GetActor());
-			if (Card && (Card->Status == ECardStatus::IN_HAND))
-			{
-				CollectionManager->DeselectHand();
-				CollectionManager->SelectCard(Card);
-			}
-		}
-
-		GetWorld()->LineTraceSingleByChannel(HitResult, WorldPosition, WorldDirection * 10000,
-			ECollisionChannel::ECC_GameTraceChannel4);
 		
-		if (HitResult.bBlockingHit)
-		{
-			UCardSlotComponent* Comp = Cast<UCardSlotComponent>(HitResult.GetComponent());
-			if(Comp != nullptr)
+			ACardGameMode* GameMode = Cast<ACardGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+			checkf(GameMode, TEXT("Game Mode is null"));
+		
+			ACGGameState* GameState = GetWorld()->GetGameState<ACGGameState>();
+
+			if (HitResult.bBlockingHit)
 			{
-				if(CollectionManager->HasASelectedCardInHand())
+				ADeck* Deck = Cast<ADeck>(HitResult.GetActor());
+
+				if (Deck && GameMode->Deck->Elements.Num() > 0)
 				{
-					Comp->Interact(CollectionManager->SelectedCard);
+					//CollectionManager->MoveBetweenCollections(CollectionManager->Deck, CollectionManager->Hand, CollectionManager->Deck->Cards[0]);
+					ACGPlayerState* PlState = Cast<ACGPlayerState>(GetPlayerState());
+					if (PlState)
+					{
+						if (GameMode)
+						{
+							GameMode->CollectionManager->MoveBetweenCollections(GameState->Deck, PlState->Hand, GameState->Deck->Elements[0]);
+						}
+
+						//PlState->OnTest();
+						//PlState->OnDrawCard();
+					}
+				}
+				return;
+			}
+
+			GetWorld()->LineTraceSingleByChannel(HitResult, WorldPosition, WorldDirection * 10000,
+				ECollisionChannel::ECC_GameTraceChannel2);
+
+			if (HitResult.bBlockingHit)
+			{
+				ACard* Card = Cast<ACard>(HitResult.GetActor());
+				if (Card && (Card->Status == ECardStatus::IN_HAND))
+				{
+					CollectionManager->DeselectHand();
+					CollectionManager->SelectCard(Card);
 				}
 			}
-		}
 
+			GetWorld()->LineTraceSingleByChannel(HitResult, WorldPosition, WorldDirection * 10000,
+				ECollisionChannel::ECC_GameTraceChannel4);
+		
+			if (HitResult.bBlockingHit)
+			{
+				UCardSlotComponent* Comp = Cast<UCardSlotComponent>(HitResult.GetComponent());
+				if(Comp != nullptr)
+				{
+					if(CollectionManager->HasASelectedCardInHand())
+					{
+						Comp->Interact(CollectionManager->SelectedCard);
+					}
+				}
+			}
 	}
 }
 

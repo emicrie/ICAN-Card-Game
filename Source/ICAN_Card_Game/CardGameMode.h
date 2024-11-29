@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameState.h"
+#include "GameFramework/GameMode.h"
 
 #include "Engine/DataTable.h"
 #include "ReplicatedCardCollectionManager.h"
@@ -11,17 +11,17 @@
 #include "ReplicatedDeck.h"
 #include "ReplicatedPlayedCards.h"
 
-#include "CGGameState.generated.h"
+#include "CardGameMode.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ICAN_CARD_GAME_API ACGGameState : public AGameState
+class ICAN_CARD_GAME_API ACardGameMode : public AGameMode
 {
 	GENERATED_BODY()
-
 public:
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Manager")
 	TSubclassOf<UReplicatedCardCollectionManager> ManagerToUse;
 
@@ -48,6 +48,7 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnStart();
-
+	
+protected:
 	virtual void BeginPlay() override;
 };

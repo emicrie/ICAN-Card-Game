@@ -59,3 +59,10 @@ void UReplicatedCardCollection::UpdateCollectionVisuals()
 {
 	OnCollectionChanged.Broadcast(this);
 }
+
+void UReplicatedCardCollection::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(UReplicatedCardCollection, Elements);
+}
