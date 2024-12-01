@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "ReplicatedCardData.h"
 #include "CardCollectionDelegates.h"
+#include "ORReplicatedObject.h"
 #include "Net/UnrealNetwork.h"
 #include "ReplicatedCardCollection.generated.h"
 
@@ -12,7 +13,7 @@
  * 
  */
 UCLASS(Blueprintable)
-class ICAN_CARD_GAME_API UReplicatedCardCollection : public UObject, public ICardCollectionInterface
+class ICAN_CARD_GAME_API UReplicatedCardCollection : public UORReplicatedObject, public ICardCollectionInterface
 {
 	GENERATED_BODY()
 
@@ -20,10 +21,10 @@ public:
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite)
 	TArray<UReplicatedCardData*> Elements;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (EditCondition = "!bInfiniteCapacity"))
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, meta = (EditCondition = "!bInfiniteCapacity"))
 	int MaxCapacity = 99;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite)
 	bool bInfiniteCapacity = false;
 
 	//Should only be used for PlayedCardsMat, as it needs empty cards to function correctly

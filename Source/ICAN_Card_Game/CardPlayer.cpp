@@ -70,8 +70,8 @@ void ACardPlayer::OnClick()
 		GetWorld()->LineTraceSingleByChannel(HitResult, WorldPosition, WorldDirection * 10000,
 			ECollisionChannel::ECC_GameTraceChannel1);
 		
-			ACardGameMode* GameMode = Cast<ACardGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
-			checkf(GameMode, TEXT("Game Mode is null"));
+			//ACardGameMode* GameMode = Cast<ACardGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+			//checkf(GameMode, TEXT("Game Mode is null"));
 		
 			ACGGameState* GameState = GetWorld()->GetGameState<ACGGameState>();
 
@@ -79,15 +79,15 @@ void ACardPlayer::OnClick()
 			{
 				ADeck* Deck = Cast<ADeck>(HitResult.GetActor());
 
-				if (Deck && GameMode->Deck->Elements.Num() > 0)
+				if (Deck && GameState->Deck->Elements.Num() > 0)
 				{
 					//CollectionManager->MoveBetweenCollections(CollectionManager->Deck, CollectionManager->Hand, CollectionManager->Deck->Cards[0]);
 					ACGPlayerState* PlState = Cast<ACGPlayerState>(GetPlayerState());
 					if (PlState)
 					{
-						if (GameMode)
+						if (GameState)
 						{
-							GameMode->CollectionManager->MoveBetweenCollections(GameState->Deck, PlState->Hand, GameState->Deck->Elements[0]);
+							GameState->CollectionManager->MoveBetweenCollections(GameState->Deck, PlState->Hand, GameState->Deck->Elements[0]);
 						}
 
 						//PlState->OnTest();

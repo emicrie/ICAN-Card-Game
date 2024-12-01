@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "ReplicatedCardData.h"
+#include "ORManagerComponent.h"
 #include "ReplicatedCardCollectionManager.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType, Blueprintable)
-class ICAN_CARD_GAME_API UReplicatedCardCollectionManager : public UObject
+class ICAN_CARD_GAME_API UReplicatedCardCollectionManager : public UORManagerComponent
 {
 	GENERATED_BODY()
 

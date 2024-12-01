@@ -19,13 +19,21 @@ class ICAN_CARD_GAME_API ACGPlayerState : public APlayerState
 public:
 	ACGPlayerState();
 
+	static int PlayerNumber;
+
+	UPROPERTY(VisibleAnywhere)
+	int ID = 0;
+
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Hand")
 	TSubclassOf<UReplicatedHand> HandCollectionToUse;
 
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Hand Settings")
+	UPROPERTY(ReplicatedUsing = OnRep_Hand, VisibleAnywhere, BlueprintReadWrite, Category = "Hand Settings")
 	UReplicatedHand* Hand;
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRep_Hand();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Hand Settings")
 	int HandSize;

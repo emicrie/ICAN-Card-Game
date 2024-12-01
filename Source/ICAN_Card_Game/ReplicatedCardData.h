@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
+#include "ORReplicatedObject.h"
 #include "ReplicatedCardData.generated.h"
 
 UENUM(BlueprintType)
@@ -16,7 +17,7 @@ enum class EReplicatedCardStatus : uint8 {
 
 //Unused, but could be useful to use instead of an int array if we want to put more than static card data in the GameState
 UCLASS(BlueprintType, DefaultToInstanced)
-class ICAN_CARD_GAME_API UReplicatedCardData : public UObject
+class ICAN_CARD_GAME_API UReplicatedCardData : public UORReplicatedObject
 {
 	GENERATED_BODY()
 
