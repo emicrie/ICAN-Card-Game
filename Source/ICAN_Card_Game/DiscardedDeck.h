@@ -27,10 +27,4 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	//*--- ACardCollectionInterface
-	virtual bool AddCard(class ACard* Card) override;
-	virtual bool RemoveCard(class ACard* Card) override;
-	virtual void UpdateCollectionVisuals() override;
-	//*--- End of ACardCollectionInterface
-
 };

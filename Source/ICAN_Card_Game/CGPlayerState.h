@@ -17,9 +17,12 @@ class ICAN_CARD_GAME_API ACGPlayerState : public APlayerState
 	GENERATED_BODY()
 
 public:
+	static int PlayerNumber;
+
 	ACGPlayerState();
 
-	static int PlayerNumber;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	TArray<int> PlayerHand;
 
 	UPROPERTY(VisibleAnywhere)
 	int ID = 0;

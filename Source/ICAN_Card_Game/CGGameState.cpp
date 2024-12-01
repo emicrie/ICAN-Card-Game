@@ -29,3 +29,11 @@ void ACGGameState::BeginPlay()
 	OnStart();
 #endif
 }
+
+void ACGGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	
+	DOREPLIFETIME(ACGGameState, Deck);
+	DOREPLIFETIME(ACGGameState, PlayedCards);
+}

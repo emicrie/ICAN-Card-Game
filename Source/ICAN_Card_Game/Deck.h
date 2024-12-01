@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Templates/SubclassOf.h"
 #include "CardCollection.h"
+#include "ReplicatedDeck.h"
 #include "Hand.h"
 #include "Deck.generated.h"
 
@@ -27,6 +28,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* StaticMeshComponent = nullptr;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "New System")
+	TSubclassOf<UReplicatedDeck> DeckCollectionToUse;
+
 	UPROPERTY(EditAnywhere)
 	TArray<TSubclassOf<class ACard>> PossibleCardsList;
 
@@ -37,15 +41,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	TArray<ACard*> SpawnedCardsList;
-
 public:	
-	//*--- ACardCollectionInterface
-	virtual bool AddCard(class ACard* Card) override;
-	virtual bool RemoveCard(class ACard* Card) override;
-	virtual void UpdateCollectionVisuals() override;
-	//*--- End of ACardCollectionInterface
-
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

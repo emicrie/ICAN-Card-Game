@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "DiscardedDeck.h"
+#include "CGPlayerState.h"
 #include "Deck.h"
 #include "Hand.h"
 #include "CardCollectionsManager.generated.h"
@@ -28,6 +29,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	AHand* Hand = nullptr;
 
+	UPROPERTY(EditAnywhere)
+	TArray<int> Hands;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -40,7 +44,7 @@ public:
 
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
-	bool MoveBetweenCollections(ACardCollection* A, ACardCollection* B, ACard* Card, const int IndexToMoveAt = -1);
+	bool MoveBetweenCollections(ACardCollection* A, ACardCollection* B, int CardID, const int IndexToMoveAt = -1, ACGPlayerState* PlayerState = nullptr);
 
 	static bool SwapCard(class ACard*& CardA, class ACard*& CardB);
 

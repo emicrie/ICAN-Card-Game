@@ -71,22 +71,23 @@ void UCardCollectionsManager::TickComponent(float DeltaTime, ELevelTick TickType
 	// ...
 }
 
-bool UCardCollectionsManager::MoveBetweenCollections(ACardCollection* A, ACardCollection* B, ACard* Card, const int IndexToMoveAt)
+bool UCardCollectionsManager::MoveBetweenCollections(ACardCollection* A, ACardCollection* B, int CardIDInList, const int IndexToMoveAt, ACGPlayerState* PlayerState)
 {
 	bool Result = false;
-	bool IsAnyCollectionInvalid = A->Cards.Num() <= 0 || (!B->bInfiniteCapacity && (B->Cards.Num() > B->MaxCapacity));
+	bool IsAnyCollectionInvalid = A->Contents.Num() <= 0 || (!B->bInfiniteCapacity && (B->Contents.Num() >= B->MaxCapacity));
 	if (IsAnyCollectionInvalid) { return false; }
 
-	if (A && B && Card)
+	if (A && B && CardIDInList >= 0)
 	{
-		Result |= A->RemoveCard(Card);
+		int Value = A->Contents[CardIDInList];
+		Result |= A->RemoveCard(CardIDInList);
 		if (IndexToMoveAt < 0)
 		{
-			Result = Result && B->AddCard(Card);
+			Result |= Result && B->AddCard(Value);
 		}
 		else
 		{
-			Result = Result && B->SetCard(Card, IndexToMoveAt);
+			Result = Result && B->SetCard(CardIDInList, IndexToMoveAt);
 		}
 		A->UpdateCollectionVisuals();
 		B->UpdateCollectionVisuals();

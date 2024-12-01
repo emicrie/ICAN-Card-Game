@@ -48,76 +48,90 @@ void ACardCollection::BindDynamicsToDelegate()
 
 	if(HasAuthority())
 	{
-		ACardGameMode* GameMode = Cast<ACardGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
-		checkf(GameMode, TEXT("Game Mode is null"));
-
-		if (Cast<ICardCollectionInterface>(GameMode->Deck)->GetCollectionType() == CollectionType)
-		{
-			UE_LOG(LogTemp, Error, TEXT("Found a fitting interface for deck"));
-			Cast<ICardCollectionInterface>(GameMode->Deck)->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
-		}
-
-		if (Cast<ICardCollectionInterface>(GameMode->PlayedCards)->GetCollectionType() == CollectionType)
-		{
-			UE_LOG(LogTemp, Error, TEXT("Found a fitting interface for played cards"));
-			Cast<ICardCollectionInterface>(GameMode->PlayedCards)->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
-		}
+		//ACardGameMode* GameMode = Cast<ACardGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+		//checkf(GameMode, TEXT("Game Mode is null"));
+		//
+		//if (Cast<ICardCollectionInterface>(GameMode->Deck)->GetCollectionType() == CollectionType)
+		//{
+		//	UE_LOG(LogTemp, Error, TEXT("Found a fitting interface for deck"));
+		//	Cast<ICardCollectionInterface>(GameMode->Deck)->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
+		//}
+		//
+		//if (Cast<ICardCollectionInterface>(GameMode->PlayedCards)->GetCollectionType() == CollectionType)
+		//{
+		//	UE_LOG(LogTemp, Error, TEXT("Found a fitting interface for played cards"));
+		//	Cast<ICardCollectionInterface>(GameMode->PlayedCards)->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
+		//}
 	}
 
 	int Index = 0;
 	ACGGameState* GameState = Cast<ACGGameState>(GetWorld()->GetGameState());
 	for (APlayerState* PlState : GameState->PlayerArray)
 	{
-		ACGPlayerState* State = Cast<ACGPlayerState>(PlState);
-		if (State != nullptr && (Cast<ICardCollectionInterface>(State->Hand)->GetCollectionType() == CollectionType))
-		{
-			UE_LOG(LogTemp, Error, TEXT("Found a fitting interface for hand of player %i"), Index);
-			State->Hand->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
-		}
-		Index++;
+		//ACGPlayerState* State = Cast<ACGPlayerState>(PlState);
+		//if (State != nullptr && (Cast<ICardCollectionInterface>(State->Hand)->GetCollectionType() == CollectionType))
+		//{
+		//	UE_LOG(LogTemp, Error, TEXT("Found a fitting interface for hand of player %i"), Index);
+		//	State->Hand->GetOnCollectionChanged().AddDynamic(this, &ACardCollection::MatchVisualsToData);
+		//}
+		//Index++;
 	}
 }
 
-bool ACardCollection::AddCard(ACard* Card)
+void ACardCollection::EmptyVisuals()
 {
-	Card->bIsCardSet = true;
-	return true;
+	for (int i = 0; i < Cards.Num(); ++i)
+	{
+		if (Cards[i])
+		{
+			GetWorld()->DestroyActor(Cards[i]);
+		}
+	}
+	Cards.Empty();
 }
 
-bool ACardCollection::SetCard(ACard* Card, const int Index)
+bool ACardCollection::AddCard(int CardID, int PositionToMoveAt)
 {
-	if(Index < MaxCapacity)
+	if (bInfiniteCapacity || Contents.Num() < MaxCapacity)
 	{
-		if(Card != nullptr)
-		{
-			Cards[Index] = Card;
-			Cards[Index]->bIsCardSet = true;
-		}
+		AddCardBP(CardID, PositionToMoveAt);
+		//Contents.Insert(CardID, PositionToMoveAt);
 		return true;
 	}
-	
 	return false;
 }
 
-bool ACardCollection::RemoveCard(ACard* Card)
+bool ACardCollection::SetCard(int CardPosInList, const int Index)
 {
+	Contents[CardPosInList] = Index;
+
+	//if(Index < MaxCapacity)
+	//{
+	//	if(Cards[CardPosInList] != nullptr)
+	//	{
+	//		Cards[Index] = Cards[CardPosInList];
+	//		Cards[Index]->bIsCardSet = true;
+	//	}
+	//	return true;
+	//}
+	
 	return true;
+}
+
+bool ACardCollection::RemoveCard(int CardPosInList)
+{
+	if (Contents.Num() > 0)
+	{
+		Contents.RemoveAt(CardPosInList);
+		return true;
+	}
+	return false;
 }
 
 void ACardCollection::UpdateCollectionVisuals()
 {
-	
+	UpdateCollectionVisualsToMatchCollectionData(this);
 }
-
-void ACardCollection::MatchVisualsToData_Implementation(const UReplicatedCardCollection* Collection)
-{
-	UpdateCollectionVisualsToMatchCollectionData(Collection);
-}
-
-//void ACardCollection::MatchVisualsToData(const UReplicatedCardCollection* Collection)
-//{
-//	UpdateCollectionVisualsToMatchCollectionData(Collection);
-//}
 
 bool ACardCollection::Shuffle()
 {
@@ -133,5 +147,6 @@ void ACardCollection::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(ACardCollection, Contents);
 	DOREPLIFETIME(ACardCollection, Cards);
 }

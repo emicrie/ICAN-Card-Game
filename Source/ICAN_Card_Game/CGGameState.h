@@ -34,10 +34,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Deck Settings")
 	int DeckSize;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Deck Settings")
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Deck Settings")
 	UReplicatedDeck* Deck;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Played Cards Settings")
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Played Cards Settings")
 	UReplicatedPlayedCards* PlayedCards;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Collection Manager")
@@ -50,4 +50,7 @@ public:
 	void OnStart();
 
 	virtual void BeginPlay() override;
+
+private:
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

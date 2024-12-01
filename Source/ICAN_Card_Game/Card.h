@@ -27,7 +27,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Online")
 	int CardID = -1;
 
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ECardStatus Status = ECardStatus::IN_DECK;
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))

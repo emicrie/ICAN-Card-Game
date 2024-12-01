@@ -17,35 +17,46 @@ public:
 	// Sets default values for this actor's properties
 	ACardCollection();
 	
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "New system")
+	TArray<int> Contents;
+
+	int ContentNumber;
+
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "New system")
 	TArray<ACard*> Cards;
 
-	UPROPERTY(EditAnywhere, meta = (EditCondition = "!bInfiniteCapacity"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "New system", meta = (EditCondition = "!bInfiniteCapacity"))
 	int MaxCapacity = 99;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "New system")
 	bool bInfiniteCapacity = false;
+
+	UPROPERTY(EditAnywhere, Category = "Card Collection")
+	ECardCollectionType CollectionType;
 
 	UFUNCTION(BlueprintCallable)
 	virtual void InitCollection();
 
-	UFUNCTION(BlueprintCallable)
-	virtual bool AddCard(ACard* Card);
+	UFUNCTION(BlueprintImplementableEvent)
+	void AddCardBP(int Value, int CollectionLocationToPutAt);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void RemoveCardBP(int CollectionLocation);
 
 	UFUNCTION(BlueprintCallable)
-	virtual bool SetCard(ACard* Card, const int Index);
+	virtual bool AddCard(int CardID, int PositionToMoveAt = 0);
 
 	UFUNCTION(BlueprintCallable)
-	virtual bool RemoveCard(ACard* Card);
+	virtual bool SetCard(int CardPosInList, const int Index);
+
+	UFUNCTION(BlueprintCallable)
+	virtual bool RemoveCard(int CardPosInList);
 
 	UFUNCTION()
 	virtual void UpdateCollectionVisuals();
 
-	UFUNCTION(Server, Unreliable)
-	virtual void MatchVisualsToData(const UReplicatedCardCollection* Collection);
-
 	UFUNCTION(BlueprintImplementableEvent)
-	void UpdateCollectionVisualsToMatchCollectionData(const UReplicatedCardCollection* Collection);
+	void UpdateCollectionVisualsToMatchCollectionData(const ACardCollection* Collection);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void EmptyCardsList();
@@ -59,8 +70,8 @@ public:
 	UFUNCTION()
 	void BindDynamicsToDelegate();
 
-	UPROPERTY(EditAnywhere, Category = "Card Collection")
-	ECardCollectionType CollectionType;
+	UFUNCTION(BlueprintCallable)
+	void EmptyVisuals();
 
 protected:
 	// Called when the game starts or when spawned

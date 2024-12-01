@@ -37,10 +37,6 @@ public:
 	virtual void BeginPlay() override;
 
 	//*--- ACardCollectionInterface
-	virtual bool AddCard(class ACard* Card) override;
-	virtual bool SetCard(ACard* Card, const int Index) override;
-	virtual bool RemoveCard(class ACard* Card) override;
-	virtual void UpdateCollectionVisuals() override;
 	virtual void InitCollection() override;
 	virtual bool IsCollectionFull() override;
 	//*--- End of ACardCollectionInterface

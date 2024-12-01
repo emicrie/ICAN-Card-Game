@@ -20,14 +20,12 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	virtual bool AddCard(int CardID, int PositionToMoveAt) override;
+
 public:	
+	//virtual bool AddCard(int CardID, int PositionToMoveAt = 0) override;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	//*--- ACardCollectionInterface
-	virtual bool AddCard(class ACard* Card) override;
-	virtual bool RemoveCard(class ACard* Card) override;
-	virtual void UpdateCollectionVisuals() override;
-	//*--- End of ACardCollectionInterface
 
 };

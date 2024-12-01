@@ -15,49 +15,12 @@ AHand::AHand()
 void AHand::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
-bool AHand::AddCard(ACard* Card)
+bool AHand::AddCard(int CardID, int PositionToMoveAt)
 {
-	if (Card && Cards.Num() < MaxCapacity)
-	{
-		Cards.Add(Card);
-		Card->Status = ECardStatus::IN_HAND;
-		return true;
-	}
-
-	return false;
-}
-
-bool AHand::RemoveCard(ACard* Card)
-{
-	if (Card && Cards.Num() > 0)
-	{
-		Cards.Remove(Card);
-		return true;
-	}
-
-	return false;
-}
-
-void AHand::UpdateCollectionVisuals()
-{
-	FVector ActorLocation = GetActorLocation();
-
-	FVector Og;
-	FVector BoxExtent;
-
-	for (int i = 0; i < Cards.Num(); ++i)
-	{
-		Cards[i]->GetActorBounds(true, Og, BoxExtent);
-
-		FVector Location(ActorLocation.X, ActorLocation.Y + ((i * (BoxExtent.Y * 2.5f))), ActorLocation.Z + (i * 0.001f));
-		FRotator Rotation(-90.0f, 0.0f, 0.0f);
-
-		Cast<AActor>(Cards[i])->SetActorLocation(Location);
-		Cast<AActor>(Cards[i])->SetActorRotation(Rotation);
-	}
+	AddCardBP(CardID, PositionToMoveAt);
+	return true;
 }
 
 // Called every frame
