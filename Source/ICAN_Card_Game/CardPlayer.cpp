@@ -40,8 +40,6 @@ void ACardPlayer::BeginPlay()
 	
 	Controller->bShowMouseCursor = true;
 	Controller->DefaultMouseCursor = EMouseCursor::Crosshairs;
-	
-	CollectionManager = UCardCollectionsManager::GetInstance();
 }
 
 // Called every frame

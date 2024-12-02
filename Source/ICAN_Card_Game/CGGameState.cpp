@@ -17,6 +17,7 @@ UReplicatedCardData* ACGGameState::CreateNewCardData(int ID)
 
 void ACGGameState::BeginPlay()
 {
+	Super::BeginPlay();
 #if 0
 	CHECK_SUBCLASS_SET(DeckCollectionToUse);
 	Deck = NewObject<UReplicatedDeck>(this, DeckCollectionToUse.GetDefaultObject()->GetClass());

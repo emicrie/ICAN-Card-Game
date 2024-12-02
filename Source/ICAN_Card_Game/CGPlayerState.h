@@ -16,9 +16,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class AHand* Hand;
 	
-	UPROPERTY(VisibleAnywhere)
-	int ID = 0;
-	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Hand")
 	TSubclassOf<class AHand> HandCollectionToUse;
 	

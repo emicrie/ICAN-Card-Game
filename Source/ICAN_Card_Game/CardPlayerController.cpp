@@ -17,12 +17,7 @@ void ACardPlayerController::BeginPlay()
 		Subsystem->AddMappingContext(InputMappingContext, 0);
 	}
 
-	PlayerID = UGameplayStatics::GetNumPlayerStates(GetWorld());
-
-	//bShowMouseCursor = true;
-	//DefaultMouseCursor = EMouseCursor::Crosshairs;
-	//
-	//CollectionManager = UCardCollectionsManager::GetInstance();
+	CollectionManager = UCardCollectionsManager::GetInstance();
 }
 
 void ACardPlayerController::OnClick()

@@ -15,9 +15,6 @@ class ICAN_CARD_GAME_API ACardPlayerController : public APlayerController
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	int PlayerID = 0;
-
 	/** Input Mapping Context to be used for player input */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	class UInputMappingContext* InputMappingContext;

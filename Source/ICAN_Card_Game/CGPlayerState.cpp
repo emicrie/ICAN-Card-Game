@@ -6,10 +6,6 @@
 void ACGPlayerState::BeginPlay()
 {
 	Super::BeginPlay();
-	//Hand = NewObject<UReplicatedHand>(this, HandCollectionToUse.GetDefaultObject()->GetClass());
-	
-	//PlayerNumber++;	
-	//ID = PlayerNumber;
 
 	OnStart();
 }

@@ -11,7 +11,7 @@
 #include "CardCollectionsManager.generated.h"
 
 
-UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class ICAN_CARD_GAME_API UCardCollectionsManager : public UActorComponent
 {
 	GENERATED_BODY()

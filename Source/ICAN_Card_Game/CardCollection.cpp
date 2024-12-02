@@ -84,7 +84,6 @@ bool ACardCollection::AddCard(int CardID, int PositionToMoveAt)
 	if (bInfiniteCapacity || Contents.Num() < MaxCapacity)
 	{
 		AddCardBP(CardID, PositionToMoveAt);
-		//Contents.Insert(CardID, PositionToMoveAt);
 		return true;
 	}
 	return false;
@@ -111,7 +110,9 @@ bool ACardCollection::RemoveCard(int CardPosInList)
 {
 	if (Contents.Num() > 0 && CardPosInList < Contents.Num())
 	{
+		//RemoveCardBP(CardPosInList);
 		Contents.RemoveAt(CardPosInList);
+		UE_LOG(LogTemp, Warning, TEXT("Number of cards in caller's deck: %d"), Contents.Num());
 		return true;
 	}
 	return false;
