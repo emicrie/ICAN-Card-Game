@@ -11,12 +11,6 @@ AHand::AHand()
 
 }
 
-// Called when the game starts or when spawned
-void AHand::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
 bool AHand::AddCard(int CardID, int PositionToMoveAt)
 {
 	AddCardBP(CardID, PositionToMoveAt);

@@ -28,8 +28,8 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* StaticMeshComponent = nullptr;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "New System")
-	TSubclassOf<UReplicatedDeck> DeckCollectionToUse;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "New system")
+	TObjectPtr<UDataTable> DeckDataTable;
 
 	UPROPERTY(EditAnywhere)
 	TArray<TSubclassOf<class ACard>> PossibleCardsList;

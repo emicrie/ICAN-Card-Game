@@ -36,7 +36,9 @@ public:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* MeshComp = nullptr;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsCardSelected = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsCardSet = false;
 
 protected:

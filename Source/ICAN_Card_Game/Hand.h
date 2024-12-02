@@ -17,9 +17,6 @@ public:
 	AHand();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 	virtual bool AddCard(int CardID, int PositionToMoveAt) override;
 
 public:	

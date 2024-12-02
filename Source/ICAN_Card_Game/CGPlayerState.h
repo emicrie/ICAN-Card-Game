@@ -4,10 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
-
-#include "ReplicatedHand.h"
-#include "Hand.h"
-
 #include "CGPlayerState.generated.h"
 
 //We might not need to replicated hands, but just in case we want a visual about it, I think it's best to put it in PlayerState
@@ -17,41 +13,21 @@ class ICAN_CARD_GAME_API ACGPlayerState : public APlayerState
 	GENERATED_BODY()
 
 public:
-	static int PlayerNumber;
-
-	ACGPlayerState();
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TArray<int> PlayerHand;
-
+	class AHand* Hand;
+	
 	UPROPERTY(VisibleAnywhere)
 	int ID = 0;
-
-	virtual void BeginPlay() override;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Hand")
-	TSubclassOf<UReplicatedHand> HandCollectionToUse;
-
-	UPROPERTY(ReplicatedUsing = OnRep_Hand, VisibleAnywhere, BlueprintReadWrite, Category = "Hand Settings")
-	UReplicatedHand* Hand;
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnRep_Hand();
-
+	TSubclassOf<class AHand> HandCollectionToUse;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Hand Settings")
 	int HandSize;
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void ServerRequestOwnHand();
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnTest();
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnDrawCard();
-
-private:
-	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-
 	
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStart();
+
+protected:
+	virtual void BeginPlay() override;
 };

@@ -20,6 +20,9 @@ public:
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "New system")
 	TArray<int> Contents;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "New system")
+	FVector OriginLocation;
+
 	int ContentNumber;
 
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "New system")
@@ -33,6 +36,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Card Collection")
 	ECardCollectionType CollectionType;
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStart();
 
 	UFUNCTION(BlueprintCallable)
 	virtual void InitCollection();
@@ -69,9 +75,6 @@ public:
 
 	UFUNCTION()
 	void BindDynamicsToDelegate();
-
-	UFUNCTION(BlueprintCallable)
-	void EmptyVisuals();
 
 protected:
 	// Called when the game starts or when spawned

@@ -22,11 +22,7 @@ UCardCollectionsManager* UCardCollectionsManager::GetInstance()
 
 void UCardCollectionsManager::DeselectHand()
 {
-	for(int i = 0; i < Hand->Cards.Num(); ++i)
-	{
-		Hand->Cards[i]->bIsCardSelected = false;
-	}
-	SelectedCard = nullptr;
+
 }
 
 void UCardCollectionsManager::SelectCard(ACard* Card)

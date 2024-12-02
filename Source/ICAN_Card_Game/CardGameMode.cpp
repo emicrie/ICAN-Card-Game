@@ -17,16 +17,21 @@ UReplicatedCardData* ACardGameMode::CreateNewCardData(int ID)
 
 void ACardGameMode::BeginPlay()
 {
-	Super::BeginPlay();
-
-	CHECK_SUBCLASS_SET(DeckCollectionToUse);
-	Deck = NewObject<UReplicatedDeck>(this, DeckCollectionToUse.GetDefaultObject()->GetClass());
-	CHECK_SUBCLASS_SET(PlayedCardsCollectionToUse);
-	PlayedCards = NewObject<UReplicatedPlayedCards>(this, PlayedCardsCollectionToUse.GetDefaultObject()->GetClass());
-	CHECK_SUBCLASS_SET(ManagerToUse);
-	CollectionManager = NewObject<UReplicatedCardCollectionManager>(this, ManagerToUse.GetDefaultObject()->GetClass());
-	
-	UE_LOG(LogTemp, Log, TEXT("GameMode BeginPlay"));
+	//Super::BeginPlay();
+	//
+	//CHECK_SUBCLASS_SET(DeckCollectionToUse);
+	//Deck = NewObject<UReplicatedDeck>(this, DeckCollectionToUse.GetDefaultObject()->GetClass());
+	//CHECK_SUBCLASS_SET(PlayedCardsCollectionToUse);
+	//PlayedCards = NewObject<UReplicatedPlayedCards>(this, PlayedCardsCollectionToUse.GetDefaultObject()->GetClass());
+	//CHECK_SUBCLASS_SET(ManagerToUse);
+	//CollectionManager = NewObject<UReplicatedCardCollectionManager>(this, ManagerToUse.GetDefaultObject()->GetClass());
+	//
+	//UE_LOG(LogTemp, Log, TEXT("GameMode BeginPlay"));
 
 	OnStart();
+}
+
+void ACardGameMode::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	DOREPLIFETIME(ACardGameMode, Deck);
 }

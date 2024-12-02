@@ -29,7 +29,7 @@ ACardPlayer::ACardPlayer()
 	PrimaryActorTick.bCanEverTick = true;
 
 	PlayerCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("PlayerCamera"));
-
+	RootComponent = PlayerCamera;
 }
 
 // Called when the game starts or when spawned
@@ -37,12 +37,11 @@ void ACardPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 	Controller = Cast<ACardPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
-
+	
 	Controller->bShowMouseCursor = true;
 	Controller->DefaultMouseCursor = EMouseCursor::Crosshairs;
-
-	CollectionManager = UCardCollectionsManager::GetInstance();
 	
+	CollectionManager = UCardCollectionsManager::GetInstance();
 }
 
 // Called every frame
@@ -55,8 +54,11 @@ void ACardPlayer::Tick(float DeltaTime)
 void ACardPlayer::OnClick()
 {
 	//TODO: This is currently highly complicated and inefficient for nothing on top of adding problematics due to poor architecture. This will have to be refactorized.
+#if 1
 	if (Controller)
 	{
+		OnClickBP();
+
 		FVector2D MousePosition;
 		Controller->GetMousePosition(MousePosition.X, MousePosition.Y);
 
@@ -70,16 +72,18 @@ void ACardPlayer::OnClick()
 		GetWorld()->LineTraceSingleByChannel(HitResult, WorldPosition, WorldDirection * 10000,
 			ECollisionChannel::ECC_GameTraceChannel1);
 
-			if (HitResult.bBlockingHit)
-			{
-				ADeck* Deck = Cast<ADeck>(HitResult.GetActor());
-
-				if (Deck && Deck->Contents.Num() > 0)
-				{
-					CollectionManager->MoveBetweenCollections(CollectionManager->Deck, CollectionManager->Hand, 0);
-				}
-				return;
-			}
+			//if (HitResult.bBlockingHit)
+			//{
+			//	ACardGameMode* GameMode = Cast<ACardGameMode>(GetWorld()->GetGameState()->AuthorityGameMode);
+			//
+			//	ADeck* Deck = Cast<ADeck>(HitResult.GetActor());
+			//
+			//	if (Deck && Deck->Contents.Num() > 0)
+			//	{
+			//		CollectionManager->MoveBetweenCollections(GameMode->Deck, CollectionManager->Hand, 0);
+			//	}
+			//	return;
+			//}
 
 			GetWorld()->LineTraceSingleByChannel(HitResult, WorldPosition, WorldDirection * 10000,
 				ECollisionChannel::ECC_GameTraceChannel2);
@@ -104,11 +108,14 @@ void ACardPlayer::OnClick()
 				{
 					if(CollectionManager->HasASelectedCardInHand())
 					{
-						Comp->Interact(CollectionManager->SelectedCard);
+						//Comp->Interact(CollectionManager->SelectedCard);
 					}
 				}
 			}
 	}
+#else
+	Cast<ACardPlayerController>(GetController())->OnClick();
+#endif
 }
 
 // Called to bind functionality to input

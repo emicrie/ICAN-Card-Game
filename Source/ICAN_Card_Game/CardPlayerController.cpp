@@ -2,6 +2,8 @@
 
 
 #include "CardPlayerController.h"
+#include "CardCollectionsManager.h"
+#include "Kismet/GameplayStatics.h"
 #include "EnhancedInputSubsystems.h"
 
 void ACardPlayerController::BeginPlay()
@@ -14,4 +16,16 @@ void ACardPlayerController::BeginPlay()
 		// add the mapping context so we get controls
 		Subsystem->AddMappingContext(InputMappingContext, 0);
 	}
+
+	PlayerID = UGameplayStatics::GetNumPlayerStates(GetWorld());
+
+	//bShowMouseCursor = true;
+	//DefaultMouseCursor = EMouseCursor::Crosshairs;
+	//
+	//CollectionManager = UCardCollectionsManager::GetInstance();
+}
+
+void ACardPlayerController::OnClick()
+{
+	OnClickBP();
 }

@@ -22,6 +22,7 @@ void ACardCollection::BeginPlay()
 {
 	Super::BeginPlay();
 	GetWorld()->GetTimerManager().SetTimer(InitTimer, this, &ACardCollection::BindDynamicsToDelegate, 0.4f, false);
+	OnStart();
 }
 
 void ACardCollection::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -78,18 +79,6 @@ void ACardCollection::BindDynamicsToDelegate()
 	}
 }
 
-void ACardCollection::EmptyVisuals()
-{
-	for (int i = 0; i < Cards.Num(); ++i)
-	{
-		if (Cards[i])
-		{
-			GetWorld()->DestroyActor(Cards[i]);
-		}
-	}
-	Cards.Empty();
-}
-
 bool ACardCollection::AddCard(int CardID, int PositionToMoveAt)
 {
 	if (bInfiniteCapacity || Contents.Num() < MaxCapacity)
@@ -120,7 +109,7 @@ bool ACardCollection::SetCard(int CardPosInList, const int Index)
 
 bool ACardCollection::RemoveCard(int CardPosInList)
 {
-	if (Contents.Num() > 0)
+	if (Contents.Num() > 0 && CardPosInList < Contents.Num())
 	{
 		Contents.RemoveAt(CardPosInList);
 		return true;

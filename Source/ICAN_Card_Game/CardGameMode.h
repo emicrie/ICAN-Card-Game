@@ -8,6 +8,8 @@
 #include "Engine/DataTable.h"
 #include "ReplicatedCardCollectionManager.h"
 
+#include "Deck.h"
+
 #include "ReplicatedDeck.h"
 #include "ReplicatedPlayedCards.h"
 
@@ -26,7 +28,7 @@ public:
 	TSubclassOf<UReplicatedCardCollectionManager> ManagerToUse;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Deck")
-	TSubclassOf<UReplicatedDeck> DeckCollectionToUse;
+	TSubclassOf<ADeck> DeckCollectionToUse;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Played Cards")
 	TSubclassOf<UReplicatedPlayedCards> PlayedCardsCollectionToUse;
@@ -34,8 +36,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Deck Settings")
 	int DeckSize;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Deck Settings")
-	UReplicatedDeck* Deck;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Deck Settings")
+	//UReplicatedDeck* Deck;
+
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Deck Settings")
+	ADeck* Deck;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Played Cards Settings")
 	UReplicatedPlayedCards* PlayedCards;
@@ -51,4 +56,7 @@ public:
 	
 protected:
 	virtual void BeginPlay() override;
+
+private:
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

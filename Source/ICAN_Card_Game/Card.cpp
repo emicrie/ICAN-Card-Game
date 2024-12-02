@@ -9,6 +9,7 @@
 // Sets default values
 ACard::ACard()
 {
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	CardDataComp = CreateDefaultSubobject<UCardData>(TEXT("Card Data"));
 	MeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh Comp"));
 

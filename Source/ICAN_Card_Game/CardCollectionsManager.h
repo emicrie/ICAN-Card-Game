@@ -11,7 +11,7 @@
 #include "CardCollectionsManager.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class ICAN_CARD_GAME_API UCardCollectionsManager : public UActorComponent
 {
 	GENERATED_BODY()
@@ -19,18 +19,6 @@ class ICAN_CARD_GAME_API UCardCollectionsManager : public UActorComponent
 public:
 	// Sets default values for this component's properties
 	UCardCollectionsManager();
-
-	UPROPERTY(EditAnywhere)
-	ADeck* Deck = nullptr;
-
-	UPROPERTY(EditAnywhere)
-	ADiscardedDeck* DiscardedDeck = nullptr;
-
-	UPROPERTY(EditAnywhere)
-	AHand* Hand = nullptr;
-
-	UPROPERTY(EditAnywhere)
-	TArray<int> Hands;
 
 protected:
 	// Called when the game starts
@@ -44,8 +32,10 @@ public:
 
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
+	UFUNCTION(BlueprintCallable)
 	bool MoveBetweenCollections(ACardCollection* A, ACardCollection* B, int CardID, const int IndexToMoveAt = -1, ACGPlayerState* PlayerState = nullptr);
 
+	UFUNCTION(BlueprintCallable)
 	static bool SwapCard(class ACard*& CardA, class ACard*& CardB);
 
 	UFUNCTION(BlueprintCallable, Category = "CardCollections singleton")
