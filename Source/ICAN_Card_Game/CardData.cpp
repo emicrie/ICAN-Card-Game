@@ -2,6 +2,7 @@
 
 
 #include "CardData.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values for this component's properties
 UCardData::UCardData()
@@ -30,5 +31,15 @@ void UCardData::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UCardData::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(UCardData, Name);
+	DOREPLIFETIME(UCardData, Value);
+	DOREPLIFETIME(UCardData, Strength);
+	DOREPLIFETIME(UCardData, Placement);
 }
 

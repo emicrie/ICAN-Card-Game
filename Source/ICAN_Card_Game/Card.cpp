@@ -5,6 +5,7 @@
 #include "Hand.h"
 #include "DiscardedDeck.h"
 #include "Components/StaticMeshComponent.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values
 ACard::ACard()
@@ -37,4 +38,15 @@ void ACard::Tick(float DeltaTime)
 void ACard::PlayCard()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Playing %s !"), *GetName());
+}
+
+void ACard::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ACard, Status);
+	DOREPLIFETIME(ACard, CardID);
+	DOREPLIFETIME(ACard, CardDataComp);
+	DOREPLIFETIME(ACard, bIsCardSelected);
+	DOREPLIFETIME(ACard, bIsCardSet);
 }

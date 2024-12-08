@@ -44,6 +44,9 @@ public:
 	void DeselectHand();
 	void SelectCard(ACard* Card);
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void MoveBetweenCollectionsBP(ACardCollection* A, ACardCollection* B, int CardID, const int IndexToMoveAt = -1, ACGPlayerState* PlayerState = nullptr);
+
 	UPROPERTY()
 	ACard* SelectedCard = nullptr;
 	
