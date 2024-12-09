@@ -11,4 +11,5 @@ void ACardGameMode::BeginPlay()
 void ACardGameMode::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	DOREPLIFETIME(ACardGameMode, Deck);
+	DOREPLIFETIME(ACardGameMode, PlayedCards);
 }

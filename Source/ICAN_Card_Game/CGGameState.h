@@ -11,6 +11,8 @@
 #include "ReplicatedDeck.h"
 #include "ReplicatedPlayedCards.h"
 
+#include "PlayedCardMat.h"
+
 #include "CGGameState.generated.h"
 
 /**
@@ -25,29 +27,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "New system")
 	TObjectPtr<UDataTable> DeckDataTable;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Manager")
-	TSubclassOf<UReplicatedCardCollectionManager> ManagerToUse;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "New system | Base Card Collections | Played Cards")
+	TSubclassOf<APlayedCardMat> PlayedCardsCollectionToUse;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Deck")
-	TSubclassOf<UReplicatedDeck> DeckCollectionToUse;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Played Cards")
-	TSubclassOf<UReplicatedPlayedCards> PlayedCardsCollectionToUse;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Deck Settings")
-	int DeckSize;
-
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Deck Settings")
-	UReplicatedDeck* Deck;
-
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Played Cards Settings")
-	UReplicatedPlayedCards* PlayedCards;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Collection Manager")
-	TObjectPtr<UReplicatedCardCollectionManager> CollectionManager;
-
-	UFUNCTION(BlueprintCallable)
-	UReplicatedCardData* CreateNewCardData(int ID);
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "New System | Played Cards Settings")
+	TObjectPtr<APlayedCardMat> PlayedCards;
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnStart();

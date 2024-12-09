@@ -40,6 +40,9 @@ void ACardCollection::Tick(float DeltaTime)
 
 void ACardCollection::InitCollection()
 {
+	Contents.Reserve(MaxCapacity);
+	Contents.Init(-1, MaxCapacity);
+	Cards.Reserve(MaxCapacity);
 	Cards.AddDefaulted(MaxCapacity);
 }
 

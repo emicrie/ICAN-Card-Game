@@ -20,13 +20,13 @@ public:
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "New system")
 	TArray<int> Contents;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "New system")
-	FVector OriginLocation;
-
-	int ContentNumber;
-
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "New system")
 	TArray<ACard*> Cards;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "New system")
+	FTransform OriginTransform;
+
+	int ContentNumber;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "New system", meta = (EditCondition = "!bInfiniteCapacity"))
 	int MaxCapacity = 99;

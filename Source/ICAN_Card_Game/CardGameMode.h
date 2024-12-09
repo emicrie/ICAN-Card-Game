@@ -9,6 +9,7 @@
 #include "CardCollectionsManager.h"
 
 #include "Deck.h"
+#include "PlayedCardMat.h"
 
 #include "CardGameMode.generated.h"
 
@@ -29,6 +30,12 @@ public:
 
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Deck Settings")
 	ADeck* Deck;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Played Cards")
+	TSubclassOf<APlayedCardMat> PlayedCardsCollectionToUse;
+
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Played Cards Settings")
+	APlayedCardMat* PlayedCards;
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnStart();
