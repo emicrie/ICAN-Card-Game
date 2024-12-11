@@ -6,9 +6,6 @@
 #include "CardCollectionsManager.h"
 #include "PlayedCardMat.h"
 #include "CGGameState.h"
-#include "ReplicatedPlayedCards.h"
-#include "ReplicatedCardData.h"
-#include "ReplicatedHand.h"
 
 UCardSlotComponent::UCardSlotComponent()
 {
@@ -30,54 +27,6 @@ void UCardSlotComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-}
-
-bool UCardSlotComponent::Interact(UReplicatedCardCollection*& InstigatorCollection, UReplicatedCardData*& Data) const
-{
-	//ACGGameState* GameState = Cast<ACGGameState>(GetWorld()->GetGameState());
-	//if (GameState)
-	//{
-	//	bool bTransferSucceeded = false;
-	//
-	//	UReplicatedPlayedCards* PlayedMat = GameState->PlayedCards;
-	//
-	//	//We swap with card with hand
-	//	checkf((GameState->PlayedCards), TEXT("Collection is expected to be a played card mat"))
-	//		if (PlayedMat->Elements[ID])
-	//		{
-	//			//TODO: These assignations are hard coded, we should probably find a smarter way to assure it's a hand->slot situation
-	//			PlayedMat->Elements[ID]->Status = EReplicatedCardStatus::IN_HAND;
-	//			Data->Status = EReplicatedCardStatus::IN_SLOT;
-	//
-	//			UReplicatedCardCollectionManager* Mng = GameState->CollectionManager;
-	//			bTransferSucceeded = Mng->SwapCard(PlayedMat->Elements[ID], InstigatorCollection->Elements[InstigatorCollection->Elements.IndexOfByKey(Data)]);
-	//			
-	//			//Mng->Hand->UpdateCollectionVisuals();
-	//			PlayedMat->UpdateCollectionVisuals();
-	//
-	//			//CollectionManager->DeselectHand();
-	//
-	//			//if (PlayedMat->IsCollectionFull())
-	//			//{
-	//			//	UE_LOG(LogTemp, Warning, TEXT("The played mat has been filled!"));
-	//			//	if (Cast<APlayedCardMat>(OwnerCollection))
-	//			//	{
-	//			//		Cast<APlayedCardMat>(OwnerCollection)->ValidateFilledMat();
-	//			//	}
-	//			//}
-	//
-	//		}
-	//		//We transfer card in hand
-	//		//else
-	//		//{
-	//		//	Card->Status = ECardStatus::IN_SLOT;
-	//		//	bTransferSucceeded = CollectionManager->MoveBetweenCollections(CollectionManager->Hand, OwnerCollection, Card, ID);
-	//		//	CollectionManager->DeselectHand();
-	//		//	OwnerCollection->UpdateCollectionVisuals();
-	//		//}
-	//	return bTransferSucceeded;
-	//}
-	return false;
 }
 
 bool UCardSlotComponent::Interact(ACard*& Card) const

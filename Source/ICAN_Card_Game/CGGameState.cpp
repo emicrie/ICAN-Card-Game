@@ -8,10 +8,3 @@ void ACGGameState::BeginPlay()
 	Super::BeginPlay();
 	OnStart();
 }
-
-void ACGGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
-{
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	DOREPLIFETIME(ACGGameState, PlayedCards);
-}

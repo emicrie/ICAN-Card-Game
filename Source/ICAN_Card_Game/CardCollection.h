@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Card.h"
-#include "CardCollectionDelegates.h"
 #include "CardCollection.generated.h"
 
 UCLASS(Abstract, Blueprintable)
@@ -33,9 +32,6 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "New system")
 	bool bInfiniteCapacity = false;
-
-	UPROPERTY(EditAnywhere, Category = "Card Collection")
-	ECardCollectionType CollectionType;
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnStart();

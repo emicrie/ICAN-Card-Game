@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "Templates/SubclassOf.h"
 #include "CardCollection.h"
-#include "ReplicatedDeck.h"
 #include "Hand.h"
 #include "Deck.generated.h"
 
