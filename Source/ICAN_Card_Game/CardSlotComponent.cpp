@@ -6,6 +6,7 @@
 #include "CardCollectionsManager.h"
 #include "PlayedCardMat.h"
 #include "CGGameState.h"
+#include "Net/UnrealNetwork.h"
 
 UCardSlotComponent::UCardSlotComponent()
 {
@@ -74,4 +75,11 @@ bool UCardSlotComponent::Interact(ACard*& Card) const
 	//return false;
 
 	return false;
+}
+
+void UCardSlotComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(UCardSlotComponent, ID);
 }
