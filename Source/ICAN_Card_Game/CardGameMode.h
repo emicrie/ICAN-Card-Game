@@ -6,8 +6,6 @@
 #include "GameFramework/GameMode.h"
 
 #include "Engine/DataTable.h"
-#include "CardCollectionsManager.h"
-
 #include "Deck.h"
 #include "PlayedCardMat.h"
 
@@ -21,24 +19,17 @@ class ICAN_CARD_GAME_API ACardGameMode : public AGameMode
 {
 	GENERATED_BODY()
 public:
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UCardCollectionsManager* CardCollectionManager;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Deck")
 	TSubclassOf<ADeck> DeckCollectionToUse;
-
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Deck Settings")
-	ADeck* Deck;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Base Card Collections | Played Cards")
 	TSubclassOf<APlayedCardMat> PlayedCardsCollectionToUse;
 
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Played Cards Settings")
-	APlayedCardMat* PlayedCards;
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Spawned Card Collections | Deck Settings")
+	ADeck* Deck;
 
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnStart();
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Spawned Card Collections | Played Cards Settings")
+	APlayedCardMat* PlayedCards;
 	
 protected:
 	virtual void BeginPlay() override;

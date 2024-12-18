@@ -2,8 +2,6 @@
 
 
 #include "Card.h"
-#include "Hand.h"
-#include "DiscardedDeck.h"
 #include "Components/StaticMeshComponent.h"
 #include "Net/UnrealNetwork.h"
 
@@ -21,25 +19,6 @@ ACard::ACard()
 
 }
 
-// Called when the game starts or when spawned
-void ACard::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ACard::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-void ACard::PlayCard()
-{
-	UE_LOG(LogTemp, Warning, TEXT("Playing %s !"), *GetName());
-}
-
 void ACard::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -48,5 +27,4 @@ void ACard::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimePro
 	DOREPLIFETIME(ACard, CardID);
 	DOREPLIFETIME(ACard, CardDataComp);
 	DOREPLIFETIME(ACard, bIsCardSelected);
-	DOREPLIFETIME(ACard, bIsCardSet);
 }

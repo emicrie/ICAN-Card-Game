@@ -7,8 +7,6 @@
 void ACGPlayerState::BeginPlay()
 {
 	Super::BeginPlay();
-
-	OnStart();
 }
 
 void ACGPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

@@ -20,21 +20,6 @@ UCardCollectionsManager* UCardCollectionsManager::GetInstance()
 	return Instance;
 }
 
-void UCardCollectionsManager::DeselectHand()
-{
-
-}
-
-void UCardCollectionsManager::SelectCard(ACard* Card)
-{
-	if(Card)
-	{
-		SelectedCard = Card;
-		Card->bIsCardSelected = true;
-	}
-}
-
-
 // Called when the game starts
 void UCardCollectionsManager::BeginPlay()
 {
@@ -56,52 +41,5 @@ void UCardCollectionsManager::EndPlay(EEndPlayReason::Type EndPlayReason)
 		Instance->RemoveFromRoot();
 		Instance = nullptr;
 	}
-}
-
-
-// Called every frame
-void UCardCollectionsManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-
-bool UCardCollectionsManager::MoveBetweenCollections(ACardCollection* A, ACardCollection* B, int CardIDInList, const int IndexToMoveAt, ACGPlayerState* PlayerState)
-{
-	MoveBetweenCollectionsBP(A, B, CardIDInList, IndexToMoveAt);
-	return true;
-	//bool Result = false;
-	//bool IsAnyCollectionInvalid = A->Contents.Num() <= 0 || (!B->bInfiniteCapacity && (B->Contents.Num() >= B->MaxCapacity));
-	//if (IsAnyCollectionInvalid) { return false; }
-	//
-	//if (A && B && CardIDInList >= 0)
-	//{
-	//	int Value = A->Contents[CardIDInList];
-	//	Result |= A->RemoveCard(CardIDInList);
-	//	if (IndexToMoveAt < 0)
-	//	{
-	//		Result |= Result && B->AddCard(Value);
-	//	}
-	//	else
-	//	{
-	//		Result = Result && B->SetCard(CardIDInList, IndexToMoveAt);
-	//	}
-	//	A->UpdateCollectionVisuals();
-	//	B->UpdateCollectionVisuals();
-	//}
-	//return Result;
-}
-
-bool UCardCollectionsManager::SwapCard(ACard*& CardA, ACard*& CardB)
-{
-	if(CardA && CardB)
-	{
-		CardA->bIsCardSet = false;
-		CardB->bIsCardSet = true;
-		::Swap(CardA, CardB);
-		return true;
-	}
-	return false;
 }
 

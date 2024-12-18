@@ -4,9 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Templates/SubclassOf.h"
 #include "CardCollection.h"
-#include "Hand.h"
 #include "Deck.generated.h"
 
 UCLASS()
@@ -19,29 +17,8 @@ public:
 	ADeck();
 
 	UPROPERTY(EditAnywhere)
-	class AHand* Hand = nullptr;
-
-	UPROPERTY(EditAnywhere)
-	class ADiscardedDeck* DiscardedDeck = nullptr;
-
-	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* StaticMeshComponent = nullptr;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "New system")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Initialization Data")
 	TObjectPtr<UDataTable> DeckDataTable;
-
-	UPROPERTY(EditAnywhere)
-	TArray<TSubclassOf<class ACard>> PossibleCardsList;
-
-	UFUNCTION(BlueprintCallable)
-	void FillDeck();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 };

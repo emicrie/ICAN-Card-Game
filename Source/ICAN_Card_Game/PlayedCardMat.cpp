@@ -4,7 +4,6 @@
 #include "PlayedCardMat.h"
 #include "CardSlotComponent.h"
 #include "ScoreCalculator.h"
-#include "Components/StaticMeshComponent.h"
 
 APlayedCardMat::APlayedCardMat()
 {
@@ -21,42 +20,24 @@ void APlayedCardMat::BeginPlay()
 {
 	Super::BeginPlay();
 
-	InitCollection();
-}
+	TArray<UCardSlotComponent*> SlotsInActor;
+	GetComponents(SlotsInActor);
+	MaxCapacity = SlotsInActor.Num();
 
-void APlayedCardMat::InitCollection()
-{
-	Super::InitCollection();
-}
-
-bool APlayedCardMat::IsCollectionFull()
-{
-	bool bIsFull = true;
-	for(int i = 0; i < MaxCapacity; i++)
+	int Index = 0;
+	for (UCardSlotComponent* CardSlot : SlotsInActor)
 	{
-		if(!Cards[i])
-		{
-			bIsFull = false;
-		}
+		CardSlot->ID = Index;
+		Index++;
 	}
-	return bIsFull;
-}
 
-void APlayedCardMat::GetSlotComps()
-{
-	GetComponents(SlotComps);
-	
-	SlotComps.Sort([](const UCardSlotComponent& cs1, const UCardSlotComponent& cs2) {
-	// access some random field just to test compile
-	return  cs1.ID < cs2.ID; });
+	Contents.Reserve(MaxCapacity);
+	Contents.Init(-1, MaxCapacity);
+	Cards.Reserve(MaxCapacity);
+	Cards.AddDefaulted(MaxCapacity);
 }
 
 void APlayedCardMat::ValidateFilledMat()
 {
 	UScoreCalculator::GetInstance()->FinalResult = UScoreCalculator::GetInstance()->CalculateScore(Cards);
-}
-
-void APlayedCardMat::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 }

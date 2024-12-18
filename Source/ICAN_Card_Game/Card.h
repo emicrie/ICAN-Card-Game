@@ -24,37 +24,26 @@ public:
 	// Sets default values for this actor's properties
 	ACard();
 
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Online")
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Card Visuals")
 	int CardID = -1;
 
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	ECardStatus Status = ECardStatus::IN_DECK;
-
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Card Visuals", meta = (AllowPrivateAccess = "true"))
 	UCardData* CardDataComp = nullptr;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Card Visuals", meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* MeshComp = nullptr;
 
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Card State", meta = (AllowPrivateAccess = "true"))
+	ECardStatus Status = ECardStatus::IN_DECK;
+
+	UPROPERTY(Replicated, EditAnywhere, Category = "Card State", BlueprintReadWrite)
 	bool bIsCardSelected = false;
 
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite)
-	bool bIsCardSet = false;
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-private:
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	void PlayCard();
-
 	UFUNCTION(BlueprintCallable)
 	inline UCardData* GetCardDataComp() {return CardDataComp;};
 

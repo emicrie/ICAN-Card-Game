@@ -21,9 +21,6 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Hand Settings")
 	int HandSize;
-	
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnStart();
 
 protected:
 	virtual void BeginPlay() override;

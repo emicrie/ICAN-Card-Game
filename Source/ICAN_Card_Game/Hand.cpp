@@ -11,16 +11,3 @@ AHand::AHand()
 
 }
 
-bool AHand::AddCard(int CardID, int PositionToMoveAt)
-{
-	AddCardBP(CardID, PositionToMoveAt);
-	return true;
-}
-
-// Called every frame
-void AHand::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-

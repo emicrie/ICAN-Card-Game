@@ -4,11 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameState.h"
-
 #include "Engine/DataTable.h"
-
-#include "PlayedCardMat.h"
-
 #include "CGGameState.generated.h"
 
 /**
@@ -20,14 +16,6 @@ class ICAN_CARD_GAME_API ACGGameState : public AGameState
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "New system")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Base Card Collections | Deck")
 	TObjectPtr<UDataTable> DeckDataTable;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "New system | Base Card Collections | Played Cards")
-	TSubclassOf<APlayedCardMat> PlayedCardsCollectionToUse;
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnStart();
-
-	virtual void BeginPlay() override;
 };

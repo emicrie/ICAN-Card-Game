@@ -20,14 +20,4 @@ protected:
 	class UInputMappingContext* InputMappingContext;
 
 	virtual void BeginPlay() override;
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnClickBP();
-
-public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class UCardCollectionsManager* CollectionManager = nullptr;
-
-	UFUNCTION()
-	void OnClick();	
 };

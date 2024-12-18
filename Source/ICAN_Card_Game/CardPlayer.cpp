@@ -7,19 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "CardCollectionsManager.h"
 #include "CardPlayerController.h"
-
-#include "CGPlayerState.h"
-#include "CGGameState.h"
-
-//TODO: References to such elements should be put in a manager
-#include "Deck.h"
-#include "DiscardedDeck.h"
-#include "Card.h"
-#include "CardGameMode.h"
-#include "CardSlotComponent.h"
-#include "Hand.h"
 
 // Sets default values
 ACardPlayer::ACardPlayer()
@@ -41,78 +29,12 @@ void ACardPlayer::BeginPlay()
 	Controller->DefaultMouseCursor = EMouseCursor::Crosshairs;
 }
 
-// Called every frame
-void ACardPlayer::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
 void ACardPlayer::OnClick()
 {
-	//TODO: This is currently highly complicated and inefficient for nothing on top of adding problematics due to poor architecture. This will have to be refactorized.
-#if 1
 	if (Controller)
 	{
 		OnClickBP();
-
-		//FVector2D MousePosition;
-		//Controller->GetMousePosition(MousePosition.X, MousePosition.Y);
-		//
-		//FVector	WorldPosition;
-		//FVector WorldDirection;
-		//
-		//UGameplayStatics::DeprojectScreenToWorld(Controller, MousePosition, WorldPosition, WorldDirection);
-		//FHitResult HitResult;
-		//
-		////DrawDebugLine(GetWorld(), WorldPosition, WorldDirection * 10000, FColor::White, true);
-		//GetWorld()->LineTraceSingleByChannel(HitResult, WorldPosition, WorldDirection * 10000,
-		//	ECollisionChannel::ECC_GameTraceChannel1);
-		//
-		//	//if (HitResult.bBlockingHit)
-		//	//{
-		//	//	ACardGameMode* GameMode = Cast<ACardGameMode>(GetWorld()->GetGameState()->AuthorityGameMode);
-		//	//
-		//	//	ADeck* Deck = Cast<ADeck>(HitResult.GetActor());
-		//	//
-		//	//	if (Deck && Deck->Contents.Num() > 0)
-		//	//	{
-		//	//		CollectionManager->MoveBetweenCollections(GameMode->Deck, CollectionManager->Hand, 0);
-		//	//	}
-		//	//	return;
-		//	//}
-		//
-		//	GetWorld()->LineTraceSingleByChannel(HitResult, WorldPosition, WorldDirection * 10000,
-		//		ECollisionChannel::ECC_GameTraceChannel2);
-		//
-		//	if (HitResult.bBlockingHit)
-		//	{
-		//		ACard* Card = Cast<ACard>(HitResult.GetActor());
-		//		if (Card && (Card->Status == ECardStatus::IN_HAND))
-		//		{
-		//			CollectionManager->DeselectHand();
-		//			CollectionManager->SelectCard(Card);
-		//		}
-		//	}
-		//
-		//	GetWorld()->LineTraceSingleByChannel(HitResult, WorldPosition, WorldDirection * 10000,
-		//		ECollisionChannel::ECC_GameTraceChannel4);
-		//
-		//	if (HitResult.bBlockingHit)
-		//	{
-		//		UCardSlotComponent* Comp = Cast<UCardSlotComponent>(HitResult.GetComponent());
-		//		if(Comp != nullptr)
-		//		{
-		//			if(CollectionManager->HasASelectedCardInHand())
-		//			{
-		//				//Comp->Interact(CollectionManager->SelectedCard);
-		//			}
-		//		}
-		//	}
 	}
-#else
-	Cast<ACardPlayerController>(GetController())->OnClick();
-#endif
 }
 
 // Called to bind functionality to input

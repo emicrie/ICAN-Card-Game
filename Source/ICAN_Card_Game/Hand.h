@@ -11,18 +11,9 @@ UCLASS()
 class ICAN_CARD_GAME_API AHand : public ACardCollection
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AHand();
-
-protected:
-	virtual bool AddCard(int CardID, int PositionToMoveAt) override;
-
-public:	
-	//virtual bool AddCard(int CardID, int PositionToMoveAt = 0) override;
-
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 };

@@ -10,17 +10,3 @@ ADiscardedDeck::ADiscardedDeck()
 	PrimaryActorTick.bCanEverTick = true;
 
 }
-
-// Called when the game starts or when spawned
-void ADiscardedDeck::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ADiscardedDeck::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}

@@ -21,25 +21,11 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UCardSlotComponent* CardSlotComp = nullptr;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Played card mat status")
 	bool bFilled = false;
 
-protected:
-	UFUNCTION(BlueprintCallable)
-	void GetSlotComps();
-
-	TArray<class UCardSlotComponent*> SlotComps;
-
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	virtual void BeginPlay() override;
-
-	//*--- ACardCollectionInterface
-	virtual void InitCollection() override;
-	virtual bool IsCollectionFull() override;
-	//*--- End of ACardCollectionInterface
 
 	UFUNCTION(BlueprintCallable)
 	void ValidateFilledMat();
