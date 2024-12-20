@@ -2,13 +2,13 @@
 
 
 #include "Card.h"
-#include "Hand.h"
-#include "DiscardedDeck.h"
 #include "Components/StaticMeshComponent.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values
 ACard::ACard()
 {
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	CardDataComp = CreateDefaultSubobject<UCardData>(TEXT("Card Data"));
 	MeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh Comp"));
 
@@ -19,21 +19,12 @@ ACard::ACard()
 
 }
 
-// Called when the game starts or when spawned
-void ACard::BeginPlay()
+void ACard::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
-	Super::BeginPlay();
-	
-}
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-// Called every frame
-void ACard::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-void ACard::PlayCard()
-{
-	UE_LOG(LogTemp, Warning, TEXT("Playing %s !"), *GetName());
+	DOREPLIFETIME(ACard, Status);
+	DOREPLIFETIME(ACard, CardID);
+	DOREPLIFETIME(ACard, CardDataComp);
+	DOREPLIFETIME(ACard, bIsCardSelected);
 }

@@ -2,6 +2,7 @@
 
 
 #include "CardCollection.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values
 ACardCollection::ACardCollection()
@@ -11,68 +12,16 @@ ACardCollection::ACardCollection()
 
 }
 
-// Called when the game starts or when spawned
-void ACardCollection::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
 void ACardCollection::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 	Cards.Reset();
 }
 
-// Called every frame
-void ACardCollection::Tick(float DeltaTime)
+void ACardCollection::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
-	Super::Tick(DeltaTime);
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-}
-
-void ACardCollection::InitCollection()
-{
-	Cards.AddDefaulted(MaxCapacity);
-}
-
-bool ACardCollection::AddCard(ACard* Card)
-{
-	Card->bIsCardSet = true;
-	return true;
-}
-
-bool ACardCollection::SetCard(ACard* Card, const int Index)
-{
-	if(Index < MaxCapacity)
-	{
-		if(Card != nullptr)
-		{
-			Cards[Index] = Card;
-			Cards[Index]->bIsCardSet = true;
-		}
-		return true;
-	}
-	
-	return false;
-}
-
-bool ACardCollection::RemoveCard(ACard* Card)
-{
-	return true;
-}
-
-bool ACardCollection::Shuffle()
-{
-	return true;
-}
-
-bool ACardCollection::IsCollectionFull()
-{
-	return Cards.Num() == MaxCapacity;
-}
-
-void ACardCollection::UpdateCollectionVisuals()
-{
-
+	DOREPLIFETIME(ACardCollection, Contents);
+	DOREPLIFETIME(ACardCollection, Cards);
 }
