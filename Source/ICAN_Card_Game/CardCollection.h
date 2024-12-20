@@ -16,44 +16,30 @@ public:
 	// Sets default values for this actor's properties
 	ACardCollection();
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Collection Contents")
+	TArray<int> Contents;
+
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Collection Contents")
 	TArray<ACard*> Cards;
 
-	UPROPERTY(EditAnywhere, meta = (EditCondition = "!bInfiniteCapacity"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collection Parameters")
+	FTransform OriginTransform;
+
+	int ContentNumber;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collection Parameters", meta = (EditCondition = "!bInfiniteCapacity"))
 	int MaxCapacity = 99;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Collection Parameters")
 	bool bInfiniteCapacity = false;
 
-	UFUNCTION(BlueprintCallable)
-	virtual void InitCollection();
-
-	UFUNCTION(BlueprintCallable)
-	virtual bool AddCard(ACard* Card);
-
-	UFUNCTION(BlueprintCallable)
-	virtual bool SetCard(ACard* Card, const int Index);
-
-	UFUNCTION(BlueprintCallable)
-	virtual bool RemoveCard(ACard* Card);
-
-	UFUNCTION(BlueprintCallable)
-	virtual void UpdateCollectionVisuals();
-
-	UFUNCTION(BlueprintCallable)
-	virtual bool Shuffle();
-
-	UFUNCTION(BlueprintCallable)
-	virtual bool IsCollectionFull();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+
+private:
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 };

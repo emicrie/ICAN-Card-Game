@@ -2,6 +2,7 @@
 
 
 #include "CardPlayerController.h"
+#include "CardCollectionsManager.h"
 #include "EnhancedInputSubsystems.h"
 
 void ACardPlayerController::BeginPlay()

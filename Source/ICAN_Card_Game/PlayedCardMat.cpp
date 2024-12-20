@@ -4,7 +4,6 @@
 #include "PlayedCardMat.h"
 #include "CardSlotComponent.h"
 #include "ScoreCalculator.h"
-#include "Components/StaticMeshComponent.h"
 
 APlayedCardMat::APlayedCardMat()
 {
@@ -21,104 +20,24 @@ void APlayedCardMat::BeginPlay()
 {
 	Super::BeginPlay();
 
-	InitCollection();
-}
+	TArray<UCardSlotComponent*> SlotsInActor;
+	GetComponents(SlotsInActor);
+	MaxCapacity = SlotsInActor.Num();
 
-bool APlayedCardMat::AddCard(class ACard* Card)
-{
-	if (Card && Cards.Num() < MaxCapacity)
+	int Index = 0;
+	for (UCardSlotComponent* CardSlot : SlotsInActor)
 	{
-		Cards.Insert(Card, 0);
-		Card->Status = ECardStatus::IN_SLOT;
-		Cards[0]->bIsCardSet = true;
-		return true;
+		CardSlot->ID = Index;
+		Index++;
 	}
-	
-	return false;
-}
 
-bool APlayedCardMat::RemoveCard(class ACard* Card)
-{
-	return Super::RemoveCard(Card);
-}
-
-bool APlayedCardMat::SetCard(ACard* Card, const int Index)
-{
-	//Sanity check, thanks to CardCollection's Initialize, the cards should never be empty
-	if(Cards.IsEmpty())
-	{
-		Cards.AddDefaulted(MaxCapacity);
-	}
-	
-	if(Index < MaxCapacity)
-	{
-		if(Card != nullptr)
-		{
-			Cards[Index] = Card;
-			Cards[Index]->bIsCardSet = true;
-		}
-
-		if(IsCollectionFull())
-		{
-			UE_LOG(LogTemp, Warning, TEXT("The played mat has been filled!"));
-			ValidateFilledMat();
-		}
-		return true;
-	}
-	
-	return false;
-}
-
-void APlayedCardMat::UpdateCollectionVisuals()
-{
-	GetSlotComps();
-
-	checkf(SlotComps.Num() <= Cards.Num(), TEXT("The number of cards is over the MaxCapacity"));
-	for(int i = 0; i < MaxCapacity; i++)
-	{
-		if (Cards.Num() > 0 && Cards[i] != nullptr)
-		{
-			if(Cards[i]->bIsCardSet)
-			{
-				Cards[i]->SetActorLocation(SlotComps[i]->GetComponentLocation());
-			}
-		}
-	}
-}
-
-void APlayedCardMat::InitCollection()
-{
-	Super::InitCollection();
-}
-
-bool APlayedCardMat::IsCollectionFull()
-{
-	bool bIsFull = true;
-	for(int i = 0; i < MaxCapacity; i++)
-	{
-		if(!Cards[i])
-		{
-			bIsFull = false;
-		}
-	}
-	return bIsFull;
-}
-
-void APlayedCardMat::GetSlotComps()
-{
-	GetComponents(SlotComps);
-	
-	SlotComps.Sort([](const UCardSlotComponent& cs1, const UCardSlotComponent& cs2) {
-	// access some random field just to test compile
-	return  cs1.ID < cs2.ID; });
+	Contents.Reserve(MaxCapacity);
+	Contents.Init(-1, MaxCapacity);
+	Cards.Reserve(MaxCapacity);
+	Cards.AddDefaulted(MaxCapacity);
 }
 
 void APlayedCardMat::ValidateFilledMat()
 {
 	UScoreCalculator::GetInstance()->FinalResult = UScoreCalculator::GetInstance()->CalculateScore(Cards);
-}
-
-void APlayedCardMat::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 }

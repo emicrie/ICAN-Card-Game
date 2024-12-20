@@ -15,7 +15,7 @@ enum class ECardStatus : uint8 {
 	IN_SLOT = 3     UMETA(DisplayName = "IN_SLOT")
 };
 
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class ICAN_CARD_GAME_API ACard : public AActor
 {
 	GENERATED_BODY()
@@ -24,28 +24,26 @@ public:
 	// Sets default values for this actor's properties
 	ACard();
 
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	ECardStatus Status = ECardStatus::IN_DECK;
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Card Visuals")
+	int CardID = -1;
 
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Card Visuals", meta = (AllowPrivateAccess = "true"))
 	UCardData* CardDataComp = nullptr;
 
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Card Visuals", meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* MeshComp = nullptr;
 
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Card State", meta = (AllowPrivateAccess = "true"))
+	ECardStatus Status = ECardStatus::IN_DECK;
+
+	UPROPERTY(Replicated, EditAnywhere, Category = "Card State", BlueprintReadWrite)
 	bool bIsCardSelected = false;
-	bool bIsCardSet = false;
+
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	void PlayCard();
-
 	UFUNCTION(BlueprintCallable)
 	inline UCardData* GetCardDataComp() {return CardDataComp;};
 
