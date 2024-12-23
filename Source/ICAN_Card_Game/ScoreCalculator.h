@@ -33,15 +33,18 @@ public:
 	// Sets default values for this component's properties
 	UScoreCalculator();
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int FinalResult = 0;
 
 	UPROPERTY(EditAnywhere)
 	TArray<FRuleStruct> MyRules;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ATextRenderActor* TextActor = nullptr;
 	
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite)
+	FString DebugScoreText;
+
 	//UPROPERTY(EditAnywhere)
 	//TArray<TSubclassOf<class UScoreRule>> Rules;
 
@@ -54,6 +57,8 @@ protected:
 
 	void AddToTextActor(FString TextToAdd);
 
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -61,6 +66,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "ScoreCalculator")
 	static UScoreCalculator* GetInstance();
 
+	UFUNCTION(BlueprintCallable, Category = "ScoreCalculator")
 	int CalculateScore(TArray<class ACard*> PlayedCards);
 
 		
