@@ -2,6 +2,7 @@
 
 
 #include "CardData.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values for this component's properties
 UCardData::UCardData()
@@ -13,22 +14,13 @@ UCardData::UCardData()
 	// ...
 }
 
-
-// Called when the game starts
-void UCardData::BeginPlay()
+void UCardData::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
-	Super::BeginPlay();
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	// ...
-	
-}
-
-
-// Called every frame
-void UCardData::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
+	DOREPLIFETIME(UCardData, Name);
+	DOREPLIFETIME(UCardData, Value);
+	DOREPLIFETIME(UCardData, Strength);
+	DOREPLIFETIME(UCardData, Placement);
 }
 

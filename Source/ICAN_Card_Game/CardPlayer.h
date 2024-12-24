@@ -34,15 +34,10 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void OnClick();
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnClickBP();
 
+public:	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-private:
-	UPROPERTY()
-	class UCardCollectionsManager* CollectionManager = nullptr;
-
 };

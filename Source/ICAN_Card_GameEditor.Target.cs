@@ -9,7 +9,7 @@ public class ICAN_Card_GameEditorTarget : TargetRules
 	{
 		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V4;
-		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_3;
+		IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 		ExtraModuleNames.Add("ICAN_Card_Game");
 	}
 }

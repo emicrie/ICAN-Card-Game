@@ -17,19 +17,9 @@ class ICAN_CARD_GAME_API UCardSlotComponent : public UStaticMeshComponent
 public:
 	UCardSlotComponent();
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Components")
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category="Components")
 	int ID = 0;
 
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
-	UPROPERTY()
-	class UCardCollectionsManager* CollectionManager = nullptr;
-
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	bool Interact(class ACard*& Card) const;
+private:
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
