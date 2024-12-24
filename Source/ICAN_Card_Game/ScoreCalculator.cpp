@@ -5,6 +5,7 @@
 #include "ScoreBonusOperand.h"
 #include "ScoreRule.h"
 #include "Components/TextRenderComponent.h"
+#include "Net/UnrealNetwork.h"
 
 UScoreCalculator* UScoreCalculator::Instance = nullptr;
 
@@ -92,6 +93,8 @@ int UScoreCalculator::CalculateScore(TArray<ACard*> PlayedCards)
 
 	FString Final = FString::SanitizeFloat(Score);
 	AddToTextActor(Final);
+
+	DebugScoreText = TextActor->GetTextRender()->Text.ToString();
 	
 	UE_LOG(LogTemp, Warning, TEXT("Final Score: %f"), Score);
 	return FMath::CeilToInt(Score);
@@ -137,5 +140,12 @@ void UScoreCalculator::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UScoreCalculator::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(UScoreCalculator, DebugScoreText);
 }
 
