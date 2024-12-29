@@ -19,7 +19,6 @@ void UCardData::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UCardData, Name);
-	DOREPLIFETIME(UCardData, Value);
 	DOREPLIFETIME(UCardData, Strength);
 	DOREPLIFETIME(UCardData, Placement);
 }

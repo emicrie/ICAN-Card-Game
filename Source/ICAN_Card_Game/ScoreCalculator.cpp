@@ -31,7 +31,10 @@ int UScoreCalculator::CalculateScore(TArray<ACard*> PlayedCards)
 	
 	for(int i = 0; i < PlayedCards.Num(); i++)
 	{
-		Score += PlayedCards[i]->GetCardDataComp()->Value;
+		if (PlayedCards[i] && PlayedCards[i]->CardID >= 0)
+		{
+			Score += PlayedCards[i]->GetCardDataComp()->Strength + 1;
+		}
 	}
 	UE_LOG(LogTemp, Warning, TEXT("Current Score: %f"), Score);
 	

@@ -11,6 +11,8 @@
 
 #include "CardGameMode.generated.h"
 
+class ACardGameFSM;
+
 /**
  * 
  */
@@ -30,6 +32,9 @@ public:
 
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Spawned Card Collections | Played Cards Settings")
 	APlayedCardMat* PlayedCards;
+
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "State Machine")
+	ACardGameFSM* StateMachine;
 	
 protected:
 	virtual void BeginPlay() override;
