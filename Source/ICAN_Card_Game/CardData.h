@@ -35,8 +35,6 @@ public:
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite)
 	FString Name;
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite)
-	float Value;
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite)
 	TEnumAsByte<CardStrength> Strength;
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite)
 	TEnumAsByte<PlacementInSentence> Placement;
