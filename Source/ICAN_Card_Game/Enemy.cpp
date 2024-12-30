@@ -40,6 +40,7 @@ void AEnemy::BeginPlay()
 	
 }
 
+#if WITH_EDITOR
 void AEnemy::PostEditChangeProperty(FPropertyChangedEvent& e)
 {
 	FName PropertyName = (e.Property != NULL) ? e.Property->GetFName() : NAME_None;
@@ -53,6 +54,7 @@ void AEnemy::PostEditChangeProperty(FPropertyChangedEvent& e)
 		TextComponentHealth->SetText(FText::FromString(HealthValueStr));
 	}
 }
+#endif
 
 // Called every frame
 void AEnemy::Tick(float DeltaTime)
