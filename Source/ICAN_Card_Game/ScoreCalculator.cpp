@@ -91,7 +91,7 @@ int UScoreCalculator::CalculateScore(TArray<ACard*> PlayedCards)
 						UE_LOG(LogTemp, Warning, TEXT("Applying %s operand (%f)"), *CurOperand->GetName(), FinalBonusValue);
 
 						RuleBonus += FString(CurOperand->OperandName.ToString());
-						RuleBonus += FString::SanitizeFloat(FinalBonusValue);
+						RuleBonus += FString::FromInt((int32)FinalBonusValue);
 						AddToTextActor(RuleBonus);
 
 						Score = CurOperand->Apply(Score, FinalBonusValue);
