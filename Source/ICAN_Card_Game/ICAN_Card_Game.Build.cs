@@ -8,7 +8,7 @@ public class ICAN_Card_Game : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "EnhancedInput", "Core", "CoreUObject", "Engine", "InputCore", });
+		PublicDependencyModuleNames.AddRange(new string[] { "EnhancedInput", "Core", "CoreUObject", "Engine", "InputCore", "FMODStudio" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
