@@ -36,38 +36,40 @@ int UScoreCalculator::CalculateScore(TArray<ACard*> PlayedCards)
 		{
 			FString CardDebug = FString(PlayedCards[i]->GetCardDataComp()->Name + ", ID: " + FString::SanitizeFloat(PlayedCards[i]->CardID) + ",  Strength: " + FString::SanitizeFloat(PlayedCards[i]->GetCardDataComp()->Strength+1) + ", Placement: " + FString::SanitizeFloat(PlayedCards[i]->GetCardDataComp()->Placement));
 			UE_LOG(LogTemp, Warning, TEXT("%s"), *CardDebug);
-			FString CardBaseInfo = FString(FString::SanitizeFloat(i));
-			CardBaseInfo += FString(": Base strength of card: " + FString::SanitizeFloat(PlayedCards[i]->GetCardDataComp()->Strength + 1));
+			FString CardBaseInfo = FString(PlayedCards[i]->GetCardDataComp()->Name);
+			CardBaseInfo += FString(": " + FString::FromInt((int32)PlayedCards[i]->GetCardDataComp()->Strength + 1) + " + ");
 			AddToTextActor(CardBaseInfo);
 			Score += PlayedCards[i]->GetCardDataComp()->Strength + 1;
 		}
 	}
 	UE_LOG(LogTemp, Warning, TEXT("Current Score: %f"), Score);
-	AddToTextActor(FString("Total value before potential bonuses: ") + FString::SanitizeFloat(Score));
+	AddToTextActor(FString("Score: ") + FString::FromInt((int32)Score));
 	
 	for(int i = 0; i < MyRules.Num(); i++)
 	{
 		UScoreRule* CurRule = MyRules[i].Rule.GetDefaultObject();
 		if(CurRule && CurRule->bValidateRule(PlayedCards))
 		{
-			FString RuleName = FString("Validated rule: " + CurRule->GetName());
-			AddToTextActor(RuleName);
+			FString RuleBonus = FString(CurRule->RuleName.ToString() + ": ");
 			
-			UE_LOG(LogTemp, Warning, TEXT("Rule %s was validated"), *CurRule->GetName());
+			UE_LOG(LogTemp, Warning, TEXT("Rule %s was validated"), *CurRule->RuleName.ToString());
 
 			if(MyRules[i].bIsDefiniteValue)
 			{
-				FString DefValueString = FString("Bonus is DefiniteValue: " + FString::SanitizeFloat(MyRules[i].DefiniteValue));
-				AddToTextActor(DefValueString);
+				//FString DefValueString = FString("Bonus is DefiniteValue: " + FString::SanitizeFloat(MyRules[i].DefiniteValue));
+				//AddToTextActor(DefValueString);
 				
 				UE_LOG(LogTemp, Warning, TEXT("Applying definite %f bonus"), MyRules[i].DefiniteValue);
 				
-				FString AddedBonus = FString("Bonus value: " + FString::SanitizeFloat(MyRules[i].DefiniteValue));
-				AddToTextActor(AddedBonus);
+				//FString AddedBonus = FString("Bonus value: " + FString::SanitizeFloat(MyRules[i].DefiniteValue));
+				//AddToTextActor(AddedBonus);
 
 				UScoreBonusOperand* CurOperand = MyRules[i].Operand.GetDefaultObject();
 				UE_LOG(LogTemp, Warning, TEXT("Applying %s operand (%f)"), *CurOperand->GetName(), MyRules[i].DefiniteValue);
 				
+				RuleBonus += FString(CurOperand->OperandName.ToString());
+				RuleBonus += FString::FromInt((int32)MyRules[i].DefiniteValue);
+				AddToTextActor(RuleBonus);
 				Score = CurOperand->Apply(Score, MyRules[i].DefiniteValue);
 			}
 			else
@@ -78,15 +80,20 @@ int UScoreCalculator::CalculateScore(TArray<ACard*> PlayedCards)
 					if (CurBonus)
 					{
 						FString CurBonusName = FString("Bonus: " + CurBonus->GetName());
-						AddToTextActor(CurBonusName);
+						//AddToTextActor(CurBonusName);
 
 						float FinalBonusValue = CurBonus->SetBonusValue(CurBonus->BonusValue, PlayedCards);
 
 						FString AddedBonus = FString("Bonus value: " + FString::SanitizeFloat(FinalBonusValue));
-						AddToTextActor(AddedBonus);
+						//AddToTextActor(AddedBonus);
 
 						UScoreBonusOperand* CurOperand = MyRules[i].Operand.GetDefaultObject();
 						UE_LOG(LogTemp, Warning, TEXT("Applying %s operand (%f)"), *CurOperand->GetName(), FinalBonusValue);
+
+						RuleBonus += FString(CurOperand->OperandName.ToString());
+						RuleBonus += FString::SanitizeFloat(FinalBonusValue);
+						AddToTextActor(RuleBonus);
+
 						Score = CurOperand->Apply(Score, FinalBonusValue);
 					}
 				}
@@ -102,7 +109,8 @@ int UScoreCalculator::CalculateScore(TArray<ACard*> PlayedCards)
 		}
 	}
 
-	FString Final = FString::SanitizeFloat(Score);
+	FString Final = TEXT("Final score: ");
+	Final += FString::FromInt((int32)Score);
 	AddToTextActor(Final);
 
 	DebugScoreText = TextActor->GetTextRender()->Text.ToString();
@@ -136,12 +144,19 @@ void UScoreCalculator::EndPlay(EEndPlayReason::Type EndPlayReason)
 }
 
 
-void UScoreCalculator::AddToTextActor(FString TextToAdd)
+void UScoreCalculator::AddToTextActor(FString TextToAdd, bool LineReturn)
 {
 	if(TextActor)
 	{
 		FString CurText = TextActor->GetTextRender()->Text.ToString();
-		TextActor->GetTextRender()->SetText(FText::FromString(CurText + TEXT("\n") + TextToAdd));
+		if (LineReturn)
+		{
+			TextActor->GetTextRender()->SetText(FText::FromString(CurText + TEXT("\n") + TextToAdd));
+		}
+		else
+		{
+			TextActor->GetTextRender()->SetText(FText::FromString(CurText + TextToAdd));
+		}
 	}
 }
 

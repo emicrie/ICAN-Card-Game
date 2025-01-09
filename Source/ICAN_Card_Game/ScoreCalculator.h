@@ -55,7 +55,7 @@ protected:
 
 	static UScoreCalculator* Instance;
 
-	void AddToTextActor(FString TextToAdd);
+	void AddToTextActor(FString TextToAdd, bool LineReturn = true);
 
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 

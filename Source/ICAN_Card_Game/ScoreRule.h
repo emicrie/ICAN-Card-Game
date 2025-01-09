@@ -19,6 +19,6 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Rule|Validation")
 	bool bValidateRule(const TArray<ACard*>& Cards);
 	
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rule|Application")
-	//TSubclassOf<class UScoreBonus> Bonus;
+	UPROPERTY(EditAnywhere)
+	FText RuleName;
 };

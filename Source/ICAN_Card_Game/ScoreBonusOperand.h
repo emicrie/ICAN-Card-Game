@@ -16,5 +16,8 @@ class ICAN_CARD_GAME_API UScoreBonusOperand : public UObject
 public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	int Apply(int CurScore, float Value);
+
+	UPROPERTY(EditAnywhere)
+	FText OperandName;
 	
 };
